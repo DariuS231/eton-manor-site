@@ -1,6 +1,55 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import home from '../data/home.json';
+
+const news = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const now = new Date();
+const events = (await getCollection('events'))
+  .filter((e) => e.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+  .slice(0, 3);
 ---
-<BaseLayout title="Eton Manor Running Club">
-  <p class="p-6">Home page content coming in the next task.</p>
+<BaseLayout title={home.heroHeading}>
+  <section class="bg-navy text-paper px-6 py-20 text-center">
+    <h1 class="text-5xl font-semibold uppercase tracking-wide">{home.heroHeading}</h1>
+    <p class="mx-auto mt-4 max-w-2xl text-lg">{home.heroSubheading}</p>
+    <a
+      href={home.heroCtaUrl}
+      class="mt-8 inline-block bg-powder px-6 py-3 font-semibold uppercase tracking-wide text-ink hover:bg-white"
+    >
+      {home.heroCtaLabel}
+    </a>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 py-12 text-center">
+    <p>{home.introBody}</p>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-12">
+    <h2 class="mb-6 text-3xl uppercase tracking-wide">Latest News</h2>
+    <ul class="grid gap-6 sm:grid-cols-3">
+      {news.map((post) => (
+        <li class="border border-navy/20 p-4">
+          <a href={`/news/${post.id}`} class="font-[family-name:--font-heading] text-xl">{post.data.title}</a>
+          <p class="mt-2 text-sm">{post.data.excerpt}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-12">
+    <h2 class="mb-6 text-3xl uppercase tracking-wide">Upcoming Events</h2>
+    <ul class="grid gap-6 sm:grid-cols-3">
+      {events.map((event) => (
+        <li class="border border-navy/20 p-4">
+          <a href={`/events/${event.id}`} class="font-[family-name:--font-heading] text-xl">{event.data.title}</a>
+          <p class="mt-2 text-sm">{event.data.location}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
