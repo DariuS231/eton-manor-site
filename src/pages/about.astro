@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import about from '../data/about.json';
+
+const paragraphs = about.body.split('\n\n');
+---
+<BaseLayout title={`${about.heading} — Eton Manor Running Club`}>
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="mb-6 text-4xl uppercase tracking-wide">{about.heading}</h1>
+    {paragraphs.map((paragraph) => (
+      <p class="mb-4">{paragraph}</p>
+    ))}
+  </section>
+</BaseLayout>
