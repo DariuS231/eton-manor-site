@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "news"
+    label: "News"
+    folder: "src/content/news"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown", body: true }
+
+  - name: "events"
+    label: "Events"
+    folder: "src/content/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Time", name: "time", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string" }
+      - label: "Event Type"
+        name: "eventType"
+        widget: "select"
+        options: ["Club Run", "Race", "Social"]
+      - { label: "External Link", name: "externalLink", widget: "string", required: false }
+      - { label: "Description", name: "body", widget: "markdown", body: true }
+
+  - name: "team"
+    label: "Team"
+    folder: "src/content/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Bio", name: "body", widget: "markdown", body: true, required: false }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home Page"
+        file: "src/data/home.json"
+        fields:
+          - { label: "Hero Heading", name: "heroHeading", widget: "string" }
+          - { label: "Hero Subheading", name: "heroSubheading", widget: "text" }
+          - { label: "Hero Button Label", name: "heroCtaLabel", widget: "string" }
+          - { label: "Hero Button Link", name: "heroCtaUrl", widget: "string" }
+          - { label: "Intro Text", name: "introBody", widget: "text" }
+      - name: "about"
+        label: "About Page"
+        file: "src/data/about.json"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Body", name: "body", widget: "text" }
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/data/contact.json"
+        fields:
+          - { label: "Intro Text", name: "intro", widget: "text" }
+          - { label: "Meeting Point", name: "meetingPoint", widget: "text" }
+          - { label: "Join Button Label", name: "joinCtaLabel", widget: "string" }
+          - { label: "Join Button Link", name: "joinCtaUrl", widget: "string" }
+      - name: "settings"
+        label: "Site Settings"
+        file: "src/data/settings.json"
+        fields:
+          - { label: "Site Title", name: "siteTitle", widget: "string" }
+          - label: "Navigation Links"
+            name: "navLinks"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+          - { label: "Footer Text", name: "footerText", widget: "string" }
+          - label: "Social Links"
+            name: "socials"
+            widget: "list"
+            fields:
+              - label: "Platform"
+                name: "platform"
+                widget: "select"
+                options: ["Instagram", "Facebook", "Strava", "X"]
+              - { label: "URL", name: "url", widget: "string" }
