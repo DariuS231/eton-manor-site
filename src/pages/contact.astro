@@ -16,8 +16,9 @@ import settings from '../data/settings.json';
       {contact.joinCtaLabel}
     </a>
 
-    <form name="contact" method="POST" data-netlify="true" class="grid gap-4">
+    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="grid gap-4">
       <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
       <label class="grid gap-1">
         <span class="text-sm font-semibold uppercase tracking-wide">Name</span>
         <input type="text" name="name" required class="border border-navy/40 px-3 py-2" />

@@ -8,12 +8,13 @@ const news = (await getCollection('news'))
   .slice(0, 3);
 
 const now = new Date();
+now.setHours(0, 0, 0, 0);
 const events = (await getCollection('events'))
   .filter((e) => e.data.date >= now)
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
   .slice(0, 3);
 ---
-<BaseLayout title={home.heroHeading}>
+<BaseLayout title={`${home.heroHeading} — Eton Manor Running Club`}>
   <section class="bg-navy text-paper px-6 py-20 text-center">
     <h1 class="text-5xl font-semibold uppercase tracking-wide">{home.heroHeading}</h1>
     <p class="mx-auto mt-4 max-w-2xl text-lg">{home.heroSubheading}</p>

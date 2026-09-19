@@ -5,6 +5,7 @@ import EventCard from '../../components/EventCard.astro';
 
 const allEvents = await getCollection('events');
 const now = new Date();
+now.setHours(0, 0, 0, 0);
 const upcoming = allEvents
   .filter((e) => e.data.date >= now)
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());

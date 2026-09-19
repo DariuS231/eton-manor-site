@@ -2,12 +2,12 @@
 import settings from '../data/settings.json';
 ---
 <header class="bg-navy text-paper">
-  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="font-[family-name:--font-heading] text-2xl font-semibold uppercase tracking-wide">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between px-6 py-4">
+    <a href="/" class="font-[family-name:--font-heading] text-xl sm:text-2xl font-semibold uppercase tracking-wide">
       {settings.siteTitle}
     </a>
     <nav>
-      <ul class="flex gap-6 font-[family-name:--font-body] text-sm uppercase tracking-wide">
+      <ul class="flex gap-3 sm:gap-6 font-[family-name:--font-body] text-sm uppercase tracking-wide">
         {settings.navLinks.map((link) => (
           <li>
             <a href={link.url} class="hover:text-powder">{link.label}</a>

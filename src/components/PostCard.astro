@@ -1,4 +1,6 @@
 ---
+import { formatDate } from '../lib/formatDate';
+
 interface Props {
   title: string;
   date: Date;
@@ -7,11 +9,7 @@ interface Props {
 }
 
 const { title, date, excerpt, href } = Astro.props;
-const formattedDate = date.toLocaleDateString('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const formattedDate = formatDate(date);
 ---
 <a href={href} class="block border border-navy/20 p-4 hover:border-navy">
   <p class="text-xs font-semibold uppercase tracking-wide text-navy">{formattedDate}</p>

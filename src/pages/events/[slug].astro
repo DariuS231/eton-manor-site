@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/formatDate';
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
@@ -12,11 +13,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const formattedDate = entry.data.date.toLocaleDateString('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const formattedDate = formatDate(entry.data.date);
 ---
 <BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
   <article class="mx-auto max-w-3xl px-6 py-16">

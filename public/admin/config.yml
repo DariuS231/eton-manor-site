@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: your-github-username/eton-manor-site
   branch: main
 
 media_folder: "public/uploads"
@@ -31,7 +32,11 @@ collections:
         name: "eventType"
         widget: "select"
         options: ["Club Run", "Race", "Social"]
-      - { label: "External Link", name: "externalLink", widget: "string", required: false }
+      - label: "External Link"
+        name: "externalLink"
+        widget: "string"
+        required: false
+        pattern: ["^https?://", "Must start with http:// or https://"]
       - { label: "Description", name: "body", widget: "markdown", body: true }
 
   - name: "team"
@@ -39,6 +44,7 @@ collections:
     folder: "src/content/team"
     create: true
     slug: "{{slug}}"
+    identifier_field: "name"
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }

@@ -23,19 +23,40 @@ npm run preview
   content collections, one Markdown file per entry.
 - `src/data/*.json` — site-wide singletons (home, about, contact, nav/
   footer/social settings).
+- Collection schemas are defined in `src/content.config.ts` (this
+  project's installed Astro version requires this flat path, not the
+  nested `src/content/config.ts` path used in some Astro docs/examples).
 
 ## Editing content via Sveltia CMS
 
 The CMS admin UI is served at `/admin` (`public/admin/index.html` +
-`config.yml`), backed by git-gateway. Before it can authenticate editors,
-enable **Identity** and **Git Gateway** for this site in the Netlify
-dashboard (Site configuration → Identity → Enable, then Identity →
-Services → Git Gateway → Enable). This is a one-time, manual step in the
-Netlify UI — it cannot be scripted from the repo.
+`config.yml`), backed by the `github` backend (Sveltia CMS does not
+support Netlify Identity + Git Gateway). Setup, one-time and outside the
+repo:
+
+1. Update `public/admin/config.yml`'s `repo:` field to the actual
+   `owner/repo-name` before deploying.
+2. Register a GitHub OAuth App at
+   https://github.com/settings/developers ("New OAuth App"). The
+   Homepage URL can be the site's URL; the **Authorization callback URL
+   must be exactly `https://api.netlify.com/auth/done`**.
+3. Note the OAuth App's Client ID and Client Secret.
+4. In Netlify: **Project configuration → Access & security → OAuth**
+   (labeled "Access control → OAuth" in some Netlify UI versions), under
+   Authentication Providers, select **Install provider**, choose
+   **GitHub**, and enter the Client ID and Client Secret. Save.
+5. Editors must have push/write access to the GitHub repository (added
+   as a collaborator, or as an org member with write access) — Sveltia
+   CMS commits directly via the GitHub API using their authenticated
+   permissions.
+
+This is still a one-time, manual setup step outside the repo, same as
+before — just a different provider.
 
 ## Deployment
 
 Connect this repository to Netlify. `netlify.toml` sets the build command
 (`npm run build`) and publish directory (`dist`). The contact form on
-`/contact` uses Netlify Forms and requires no extra configuration beyond
-the standard Netlify deploy.
+`/contact` uses Netlify Forms via static HTML detection. Form detection
+must be enabled once in the Netlify UI: **Site configuration → Forms →
+enable detection** — before submissions will be captured.
