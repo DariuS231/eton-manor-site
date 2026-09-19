@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EventCard from '../../components/EventCard.astro';
+
+const allEvents = await getCollection('events');
+const now = new Date();
+const upcoming = allEvents
+  .filter((e) => e.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const past = allEvents
+  .filter((e) => e.data.date < now)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout title="Events — Eton Manor Running Club">
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">Upcoming Events</h1>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {upcoming.map((event) => (
+        <EventCard
+          title={event.data.title}
+          date={event.data.date}
+          time={event.data.time}
+          location={event.data.location}
+          eventType={event.data.eventType}
+          href={`/events/${event.id}`}
+        />
+      ))}
+    </div>
+
+    <h2 class="mb-8 mt-16 text-3xl uppercase tracking-wide">Past Events</h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {past.map((event) => (
+        <EventCard
+          title={event.data.title}
+          date={event.data.date}
+          time={event.data.time}
+          location={event.data.location}
+          eventType={event.data.eventType}
+          href={`/events/${event.id}`}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

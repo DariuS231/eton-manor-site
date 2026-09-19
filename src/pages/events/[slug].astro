@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const formattedDate = entry.data.date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <span class="text-xs font-semibold uppercase tracking-wide text-navy">{entry.data.eventType}</span>
+    <h1 class="mb-2 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
+    <p class="mb-1 text-sm">{formattedDate}{entry.data.time ? ` · ${entry.data.time}` : ''}</p>
+    <p class="mb-6 text-sm">{entry.data.location}</p>
+    <div class="prose">
+      <Content />
+    </div>
+    {entry.data.externalLink && (
+      <a href={entry.data.externalLink} class="mt-6 inline-block bg-navy px-6 py-3 font-semibold uppercase text-paper hover:bg-navy/80">
+        Event Details
+      </a>
+    )}
+  </article>
+</BaseLayout>

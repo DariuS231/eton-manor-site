@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  time?: string;
+  location: string;
+  eventType: string;
+  href: string;
+}
+
+const { title, date, time, location, eventType, href } = Astro.props;
+const formattedDate = date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<a href={href} class="block border border-navy/20 p-4 hover:border-navy">
+  <span class="text-xs font-semibold uppercase tracking-wide text-navy">{eventType}</span>
+  <h3 class="font-[family-name:--font-heading] text-xl">{title}</h3>
+  <p class="mt-1 text-sm">{formattedDate}{time ? ` · ${time}` : ''}</p>
+  <p class="text-sm">{location}</p>
+</a>
