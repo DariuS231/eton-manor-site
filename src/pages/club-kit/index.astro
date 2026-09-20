@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const kit = await getCollection('kit');
+---
+<BaseLayout title="Club Kit — Eton Manor Running Club">
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">Club Kit</h1>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {kit.map((item) => (
+        <div class="flex flex-col rounded-xl bg-paper p-4 shadow-card">
+          {item.data.image && (
+            <img
+              src={item.data.image}
+              alt={item.data.name}
+              class="mb-4 aspect-square w-full rounded-lg object-cover"
+            />
+          )}
+          <h2 class="font-[family-name:--font-heading] text-xl">{item.data.name}</h2>
+          {item.data.description && <p class="mt-1 text-sm">{item.data.description}</p>}
+          <p class="mt-2 font-semibold">£{item.data.priceGBP.toFixed(2)}</p>
+          <form class="add-to-cart-form mt-4 flex flex-col gap-2" data-id={item.id}>
+            {item.data.sizes && item.data.sizes.length > 0 && (
+              <select name="size" class="rounded-lg border border-navy/40 px-3 py-2" required>
+                <option value="" disabled selected>Select size</option>
+                {item.data.sizes.map((size) => <option value={size}>{size}</option>)}
+              </select>
+            )}
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              class="rounded-lg border border-navy/40 px-3 py-2"
+            />
+            <button
+              type="submit"
+              class="rounded-full bg-navy px-4 py-2 font-semibold uppercase tracking-wide text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy/80"
+            >
+              Add to Cart
+            </button>
+          </form>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { addToCart } from '../../lib/cart.js';
+
+  document.querySelectorAll('.add-to-cart-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const id = form.dataset.id;
+      const formData = new FormData(form);
+      const size = formData.get('size') || null;
+      const quantity = Number(formData.get('quantity')) || 1;
+      addToCart(id, size, quantity);
+    });
+  });
+</script>

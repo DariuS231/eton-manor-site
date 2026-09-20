@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/generate-kit-catalog.mjs",
     "build": "astro build",
     "preview": "astro preview"
   },
@@ -14,7 +15,9 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.3",
+    "gray-matter": "^4.0.3",
     "marked": "^18.0.13",
+    "stripe": "^22.6.2",
     "tailwindcss": "^4.3.3"
   }
 }

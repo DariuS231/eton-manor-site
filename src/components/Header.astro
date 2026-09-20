@@ -24,7 +24,8 @@ const navLinks = settings.navLinks as NavLink[];
       )}
     </a>
 
-    <nav class="hidden sm:block">
+    <div class="flex items-center gap-1">
+      <nav class="hidden sm:block">
       <ul class="flex gap-1 sm:gap-2 font-[family-name:--font-body] text-sm uppercase tracking-wide">
         {navLinks.map((link, i) => (
           <li class="relative">
@@ -80,6 +81,22 @@ const navLinks = settings.navLinks as NavLink[];
       </ul>
     </nav>
 
+    <a
+      href="/club-kit/cart"
+      class="relative inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-200 hover:bg-powder/20"
+      aria-label="View cart"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.994-4.693 2.615-7.151.16-.633-.32-1.249-.972-1.249H4.756m3.132 8.4l-.94-3.526M6.75 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+      </svg>
+      <span
+        id="cart-count"
+        class="absolute -right-0.5 -top-0.5 hidden h-5 w-5 items-center justify-center rounded-full bg-powder text-xs font-semibold text-ink"
+      >
+        0
+      </span>
+    </a>
+
     <button
       id="nav-toggle"
       type="button"
@@ -95,6 +112,7 @@ const navLinks = settings.navLinks as NavLink[];
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
+    </div>
   </div>
 
   <nav id="mobile-nav" class="hidden sm:hidden">
@@ -156,6 +174,8 @@ const navLinks = settings.navLinks as NavLink[];
 </header>
 
 <script>
+  import { getCartCount } from '../lib/cart.js';
+
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('mobile-nav');
   const iconOpen = document.getElementById('nav-icon-open');
@@ -194,4 +214,16 @@ const navLinks = settings.navLinks as NavLink[];
   });
 
   document.addEventListener('click', () => closeAllDropdowns());
+
+  function updateCartBadge() {
+    const badge = document.getElementById('cart-count');
+    if (!badge) return;
+    const count = getCartCount();
+    badge.textContent = String(count);
+    badge.classList.toggle('hidden', count === 0);
+    badge.classList.toggle('flex', count > 0);
+  }
+
+  updateCartBadge();
+  document.addEventListener('cart:change', updateCartBadge);
 </script>

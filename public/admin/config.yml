@@ -97,6 +97,25 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "File", name: "file", widget: "file" }
 
+  - name: "kit"
+    label: "Club Kit"
+    folder: "src/content/kit"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "name"
+    media_folder: "{{media_folder}}/kit"
+    public_folder: "{{public_folder}}/kit"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Price (GBP)", name: "priceGBP", widget: "number", value_type: "float" }
+      - label: "Sizes"
+        name: "sizes"
+        widget: "list"
+        required: false
+        field: { label: "Size", name: "size", widget: "string" }
+
   - name: "pages"
     label: "Pages"
     files:

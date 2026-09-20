@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Order Confirmed — Eton Manor Running Club">
+  <section class="mx-auto max-w-3xl px-6 py-16 text-center">
+    <h1 class="mb-4 text-4xl uppercase tracking-wide">Thanks for your order!</h1>
+    <p>Your payment was successful. The kit coordinator will be in touch about collection.</p>
+  </section>
+</BaseLayout>
+
+<script>
+  import { clearCart } from '../../lib/cart.js';
+  clearCart();
+</script>
