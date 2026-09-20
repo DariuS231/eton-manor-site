@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const kit = await getCollection('kit');
+const catalog = kit.map((item) => ({
+  id: item.id,
+  name: item.data.name,
+  priceGBP: item.data.priceGBP,
+}));
+---
+<BaseLayout title="Your Cart — Eton Manor Running Club">
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">Your Cart</h1>
+    <div id="cart-empty" class="hidden">
+      <p>Your cart is empty. <a href="/club-kit" class="underline">Browse Club Kit</a>.</p>
+    </div>
+    <div id="cart-contents" class="hidden">
+      <ul id="cart-lines" class="flex flex-col gap-4"></ul>
+      <p class="mt-6 text-lg font-semibold">Subtotal: £<span id="cart-subtotal">0.00</span></p>
+      <button
+        id="checkout-button"
+        type="button"
+        class="mt-4 rounded-full bg-navy px-6 py-3 font-semibold uppercase tracking-wide text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy/80 hover:shadow-card-hover"
+      >
+        Checkout
+      </button>
+      <p id="checkout-error" class="mt-2 hidden text-sm text-red-700"></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script type="application/json" id="kit-catalog" set:html={JSON.stringify(catalog)} />
+
+<script>
+  import { getCart, removeFromCart } from '../../lib/cart.js';
+
+  const catalogEl = document.getElementById('kit-catalog');
+  const catalog = JSON.parse(catalogEl.textContent);
+
+  function render() {
+    const items = getCart();
+    const emptyEl = document.getElementById('cart-empty');
+    const contentsEl = document.getElementById('cart-contents');
+    const linesEl = document.getElementById('cart-lines');
+    const subtotalEl = document.getElementById('cart-subtotal');
+
+    if (items.length === 0) {
+      emptyEl.classList.remove('hidden');
+      contentsEl.classList.add('hidden');
+      return;
+    }
+    emptyEl.classList.add('hidden');
+    contentsEl.classList.remove('hidden');
+
+    linesEl.innerHTML = '';
+    let subtotal = 0;
+    for (const item of items) {
+      const product = catalog.find((p) => p.id === item.id);
+      if (!product) continue;
+      const lineTotal = product.priceGBP * item.quantity;
+      subtotal += lineTotal;
+
+      const li = document.createElement('li');
+      li.className = 'flex items-center justify-between rounded-xl bg-paper p-4 shadow-card';
+      li.innerHTML = `
+        <div>
+          <p class="font-[family-name:--font-heading] text-xl">${product.name}${item.size ? ' — ' + item.size : ''}</p>
+          <p class="text-sm">£${product.priceGBP.toFixed(2)} × ${item.quantity} = £${lineTotal.toFixed(2)}</p>
+        </div>
+        <button type="button" class="remove-line rounded-full px-3 py-1.5 text-sm uppercase hover:bg-navy/10" data-id="${item.id}" data-size="${item.size ?? ''}">
+          Remove
+        </button>
+      `;
+      linesEl.appendChild(li);
+    }
+    subtotalEl.textContent = subtotal.toFixed(2);
+
+    linesEl.querySelectorAll('.remove-line').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        removeFromCart(btn.dataset.id, btn.dataset.size || null);
+        render();
+      });
+    });
+  }
+
+  render();
+  document.addEventListener('cart:change', render);
+
+  document.getElementById('checkout-button')?.addEventListener('click', async () => {
+    const errorEl = document.getElementById('checkout-error');
+    errorEl.classList.add('hidden');
+    const items = getCart();
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Checkout failed');
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      errorEl.textContent = 'Something went wrong, please try again.';
+      errorEl.classList.remove('hidden');
+    }
+  });
+</script>
