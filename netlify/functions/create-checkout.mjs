@@ -1,10 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
 import Stripe from 'stripe';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const catalog = JSON.parse(readFileSync(join(__dirname, 'kit-catalog.json'), 'utf-8'));
+const catalog = JSON.parse(readFileSync(new URL('./kit-catalog.json', import.meta.url), 'utf-8'));
 
 export class ValidationError extends Error {}
 
