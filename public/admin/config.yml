@@ -48,6 +48,7 @@ collections:
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
       - { label: "Bio", name: "body", widget: "markdown", body: true, required: false }
 
   - name: "sponsors"

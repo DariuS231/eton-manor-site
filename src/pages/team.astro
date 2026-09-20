@@ -1,16 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TeamCard from '../components/TeamCard.astro';
 
 const team = await getCollection('team');
+const teamWithBios = await Promise.all(
+  team.map(async (member) => ({ member, ...(await render(member)) })),
+);
 ---
 <BaseLayout title="Meet the Team — Eton Manor Running Club">
   <section class="mx-auto max-w-5xl px-6 py-16">
     <h1 class="mb-8 text-4xl uppercase tracking-wide">Meet the Team</h1>
     <div class="grid gap-6 sm:grid-cols-3">
-      {team.map((member) => (
-        <TeamCard name={member.data.name} role={member.data.role} />
+      {teamWithBios.map(({ member, Content }) => (
+        <TeamCard name={member.data.name} role={member.data.role} photo={member.data.photo}>
+          <Content />
+        </TeamCard>
       ))}
     </div>
   </section>

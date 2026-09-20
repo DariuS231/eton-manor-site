@@ -3,28 +3,20 @@
   "logo": "/uploads/Club-Logo-Eton-Manor-AC-GB-2019-e1615225179593.png",
   "navLinks": [
     {
-      "label": "Home",
-      "url": "/"
-    },
-    {
-      "label": "About",
+      "label": "The Club",
       "url": "/about"
     },
     {
-      "label": "Team",
+      "label": "About Us",
       "url": "/team"
     },
     {
-      "label": "Events",
+      "label": "Membership",
       "url": "/events"
     },
     {
-      "label": "News",
+      "label": "Event Reports",
       "url": "/news"
-    },
-    {
-      "label": "Contact",
-      "url": "/contact"
     }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",
