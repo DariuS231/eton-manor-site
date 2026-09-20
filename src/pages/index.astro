@@ -13,18 +13,64 @@ const events = (await getCollection('events'))
   .filter((e) => e.data.date >= now)
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
   .slice(0, 3);
+
+const heroImages: string[] = (home as { heroImages?: string[] }).heroImages ?? [];
+const showSeconds = 5;
+const fadeSeconds = 1;
+const cycleSeconds = heroImages.length * showSeconds;
+
+function heroFadeKeyframes(index: number, count: number): string {
+  const start = ((index * showSeconds) / (count * showSeconds)) * 100;
+  const end = (((index + 1) * showSeconds) / (count * showSeconds)) * 100;
+  const fadePct = (fadeSeconds / (count * showSeconds)) * 100;
+  const fadeInStart = Math.max(0, start - fadePct);
+  const holdEnd = Math.max(start, end - fadePct);
+  return `@keyframes hero-fade-${index} {
+    0% { opacity: 0; }
+    ${fadeInStart.toFixed(3)}% { opacity: 0; }
+    ${start.toFixed(3)}% { opacity: 1; }
+    ${holdEnd.toFixed(3)}% { opacity: 1; }
+    ${end.toFixed(3)}% { opacity: 0; }
+    100% { opacity: 0; }
+  }`;
+}
+
+const heroKeyframesCss = heroImages
+  .map((_, i) => heroFadeKeyframes(i, heroImages.length))
+  .join('\n');
 ---
 <BaseLayout title={`${home.heroHeading} — Eton Manor Running Club`}>
-  <section class="bg-navy text-paper px-6 py-20 text-center">
-    <h1 class="text-5xl font-semibold uppercase tracking-wide">{home.heroHeading}</h1>
-    <p class="mx-auto mt-4 max-w-2xl text-lg">{home.heroSubheading}</p>
-    <a
-      href={home.heroCtaUrl}
-      class="mt-8 inline-block bg-powder px-6 py-3 font-semibold uppercase tracking-wide text-ink hover:bg-white"
-    >
-      {home.heroCtaLabel}
-    </a>
+  <section class="relative overflow-hidden bg-navy text-paper px-6 py-20 text-center">
+    {heroImages.length > 0 && (
+      <>
+        {heroImages.map((src, i) => (
+          <img
+            src={src}
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+            style={
+              heroImages.length > 1
+                ? `animation: hero-fade-${i} ${cycleSeconds}s infinite;`
+                : 'opacity: 1;'
+            }
+          />
+        ))}
+        <div class="absolute inset-0 bg-black/40"></div>
+      </>
+    )}
+    <div class="relative z-10">
+      <h1 class="text-5xl font-semibold uppercase tracking-wide">{home.heroHeading}</h1>
+      <p class="mx-auto mt-4 max-w-2xl text-lg">{home.heroSubheading}</p>
+      <a
+        href={home.heroCtaUrl}
+        class="mt-8 inline-block bg-powder px-6 py-3 font-semibold uppercase tracking-wide text-ink hover:bg-white"
+      >
+        {home.heroCtaLabel}
+      </a>
+    </div>
   </section>
+
+  {heroImages.length > 1 && <style set:html={heroKeyframesCss} />}
 
   <section class="mx-auto max-w-3xl px-6 py-12 text-center">
     <p>{home.introBody}</p>

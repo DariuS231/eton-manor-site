@@ -1,8 +1,26 @@
 ---
+import { getCollection } from 'astro:content';
 import settings from '../data/settings.json';
+
+const sponsors = await getCollection('sponsors');
 ---
 <footer class="bg-ink text-paper">
   <div class="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-8 text-sm">
+    {sponsors.length > 0 && (
+      <ul class="flex flex-wrap items-center justify-center gap-6">
+        {sponsors.map((sponsor) => (
+          <li>
+            <a href={sponsor.data.url} target="_blank" rel="noopener noreferrer">
+              <img
+                src={sponsor.data.logo}
+                alt={sponsor.data.name}
+                class="h-10 w-auto object-contain"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
     <ul class="flex gap-4">
       {settings.socials.map((social) => (
         <li>

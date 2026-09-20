@@ -34,6 +34,13 @@ The CMS admin UI is served at `/admin` (`public/admin/index.html` +
 support Netlify Identity + Git Gateway). Setup, one-time and outside the
 repo:
 
+> **Local dev note:** Astro's dev server (`npm run dev`) does not resolve
+> `/admin` or `/admin/` to `public/admin/index.html` — this is a known,
+> won't-fix Astro limitation ([withastro/astro#14800](https://github.com/withastro/astro/issues/14800)).
+> Use `http://localhost:PORT/admin/index.html` while running `npm run dev`.
+> `npm run build && npm run preview`, and the deployed Netlify site, both
+> resolve plain `/admin` correctly.
+
 1. Update `public/admin/config.yml`'s `repo:` field to the actual
    `owner/repo-name` before deploying.
 2. Register a GitHub OAuth App at

@@ -50,6 +50,20 @@ collections:
       - { label: "Role", name: "role", widget: "string" }
       - { label: "Bio", name: "body", widget: "markdown", body: true, required: false }
 
+  - name: "sponsors"
+    label: "Sponsors"
+    folder: "src/content/sponsors"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "name"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - label: "Link"
+        name: "url"
+        widget: "string"
+        pattern: ["^https?://", "Must start with http:// or https://"]
+      - { label: "Logo", name: "logo", widget: "image" }
+
   - name: "pages"
     label: "Pages"
     files:
@@ -62,6 +76,11 @@ collections:
           - { label: "Hero Button Label", name: "heroCtaLabel", widget: "string" }
           - { label: "Hero Button Link", name: "heroCtaUrl", widget: "string" }
           - { label: "Intro Text", name: "introBody", widget: "text" }
+          - label: "Hero Background Images"
+            name: "heroImages"
+            widget: "list"
+            required: false
+            field: { label: "Image", name: "image", widget: "image" }
       - name: "about"
         label: "About Page"
         file: "src/data/about.json"
@@ -81,6 +100,7 @@ collections:
         file: "src/data/settings.json"
         fields:
           - { label: "Site Title", name: "siteTitle", widget: "string" }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
           - label: "Navigation Links"
             name: "navLinks"
             widget: "list"

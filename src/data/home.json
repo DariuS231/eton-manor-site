@@ -1,7 +1,10 @@
 {
-  "heroHeading": "Run With Eton Manor",
+  "heroHeading": "Welcome to Eton Manor AC",
   "heroSubheading": "A friendly running club for all paces, based in East London since 1946.",
   "heroCtaLabel": "Join a Session",
   "heroCtaUrl": "/contact",
-  "introBody": "Eton Manor is a community running club welcoming runners of every ability. Whether you're chasing a marathon PB or joining your first ever run, our coached sessions and social runs will help you get there."
+  "introBody": "Eton Manor is a community running club welcoming runners of every ability. Whether you're chasing a marathon PB or joining your first ever run, our coached sessions and social runs will help you get there.",
+  "heroImages": [
+    "/uploads/IMG_3278s-300x200.jpg"
+  ]
 }

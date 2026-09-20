@@ -1,17 +1,45 @@
 {
   "siteTitle": "Eton Manor Running Club",
+  "logo": "/uploads/Club-Logo-Eton-Manor-AC-GB-2019-e1615225179593.png",
   "navLinks": [
-    { "label": "Home", "url": "/" },
-    { "label": "About", "url": "/about" },
-    { "label": "Team", "url": "/team" },
-    { "label": "Events", "url": "/events" },
-    { "label": "News", "url": "/news" },
-    { "label": "Contact", "url": "/contact" }
+    {
+      "label": "Home",
+      "url": "/"
+    },
+    {
+      "label": "About",
+      "url": "/about"
+    },
+    {
+      "label": "Team",
+      "url": "/team"
+    },
+    {
+      "label": "Events",
+      "url": "/events"
+    },
+    {
+      "label": "News",
+      "url": "/news"
+    },
+    {
+      "label": "Contact",
+      "url": "/contact"
+    }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",
   "socials": [
-    { "platform": "Instagram", "url": "https://instagram.com/etonmanorrc" },
-    { "platform": "Strava", "url": "https://strava.com/clubs/etonmanor" },
-    { "platform": "Facebook", "url": "https://facebook.com/etonmanorrc" }
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com/etonmanorrc"
+    },
+    {
+      "platform": "Strava",
+      "url": "https://strava.com/clubs/etonmanor"
+    },
+    {
+      "platform": "Facebook",
+      "url": "https://facebook.com/etonmanorrc"
+    }
   ]
 }

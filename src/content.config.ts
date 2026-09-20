@@ -30,4 +30,13 @@ const team = defineCollection({
   }),
 });
 
-export const collections = { news, events, team };
+const sponsors = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/sponsors' }),
+  schema: z.object({
+    name: z.string(),
+    url: z.string().url(),
+    logo: z.string(),
+  }),
+});
+
+export const collections = { news, events, team, sponsors };

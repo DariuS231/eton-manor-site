@@ -4,7 +4,11 @@ import settings from '../data/settings.json';
 <header class="bg-navy text-paper">
   <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between px-6 py-4">
     <a href="/" class="font-[family-name:--font-heading] text-xl sm:text-2xl font-semibold uppercase tracking-wide">
-      {settings.siteTitle}
+      {settings.logo ? (
+        <img src={settings.logo} alt={settings.siteTitle} class="h-8 sm:h-10 w-auto" />
+      ) : (
+        <span>{settings.siteTitle}</span>
+      )}
     </a>
     <nav>
       <ul class="flex gap-3 sm:gap-6 font-[family-name:--font-body] text-sm uppercase tracking-wide">
