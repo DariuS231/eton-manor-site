@@ -1,0 +1,19 @@
+---
+import { formatDate } from '../lib/formatDate';
+
+interface Props {
+  name: string;
+  date: Date;
+  distance: string;
+  description?: string;
+}
+
+const { name, date, distance, description } = Astro.props;
+const formattedDate = formatDate(date);
+---
+<div class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+  <span class="text-xs font-semibold uppercase tracking-wide text-navy">{distance}</span>
+  <h3 class="font-heading text-xl">{name}</h3>
+  <p class="mt-1 text-sm">{formattedDate}</p>
+  {description && <p class="mt-1 text-sm">{description}</p>}
+</div>

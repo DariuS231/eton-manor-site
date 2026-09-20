@@ -1,0 +1,28 @@
+---
+import { marked } from 'marked';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import privacyPolicy from '../data/privacy-policy.json';
+
+const contentHtml = privacyPolicy.content ? await marked.parse(privacyPolicy.content) : '';
+---
+<BaseLayout title={`${privacyPolicy.title} — Eton Manor Running Club`}>
+  {privacyPolicy.heroImage && (
+    <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
+      <img
+        src={privacyPolicy.heroImage}
+        alt=""
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="relative z-10 flex h-full items-center justify-center px-6 text-center">
+        <h1 class="text-4xl uppercase tracking-wide text-paper">{privacyPolicy.title}</h1>
+      </div>
+    </div>
+  )}
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    {!privacyPolicy.heroImage && (
+      <h1 class="mb-6 text-4xl uppercase tracking-wide">{privacyPolicy.title}</h1>
+    )}
+    {contentHtml && <div class="prose" set:html={contentHtml} />}
+  </article>
+</BaseLayout>

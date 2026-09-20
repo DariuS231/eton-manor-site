@@ -11,7 +11,7 @@ The club is run entirely by a volunteer committee of current members, who change
 
 We’re proudly inclusive and aim to be representative of our community, with members of all ages, backgrounds and running abilities welcome.
 
-You can find out more about our [volunteer committee here](https://www.eton-manor.com/club-committee/) and to get a sense of our member community, you can like us on [Facebook](https://www.facebook.com/EtonManorAC), follow us on [Twitter](https://twitter.com/etonmanorac) or [Instagram](https://www.instagram.com/etonmanorac/), and if you’re planning on joining us you can chat with members in our [Facebook Member’s Group](https://www.facebook.com/groups/149219048435581).
+You can find out more about our [volunteer committee here](/team) and to get a sense of our member community, you can like us on [Facebook](https://www.facebook.com/EtonManorAC), follow us on [Twitter](https://twitter.com/etonmanorac) or [Instagram](https://www.instagram.com/etonmanorac/), and if you’re planning on joining us you can chat with members in our [Facebook Member’s Group](https://www.facebook.com/groups/149219048435581).
 
 ***
 

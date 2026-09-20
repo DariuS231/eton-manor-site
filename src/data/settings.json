@@ -4,7 +4,7 @@
   "navLinks": [
     {
       "label": "The Club",
-      "url": "",
+      "url": "/pages/the-club",
       "children": [
         {
           "label": "Youth Section",
@@ -23,6 +23,22 @@
             {
               "label": "Racing",
               "url": "/pages/racing"
+            },
+            {
+              "label": "Training",
+              "url": "/pages/training"
+            },
+            {
+              "label": "Fixures",
+              "url": "/race-fixures"
+            },
+            {
+              "label": "Results",
+              "url": "/results"
+            },
+            {
+              "label": "Parkrun",
+              "url": "/pages/parkrun-stats"
             }
           ]
         }
@@ -31,11 +47,42 @@
     {
       "label": "About Us",
       "url": "/pages/about-us",
-      "children": []
+      "children": [
+        {
+          "label": "Who We Are",
+          "url": "/pages/who-we-are",
+          "children": []
+        },
+        {
+          "label": "Club Committee",
+          "url": "/team",
+          "children": []
+        },
+        {
+          "label": "Our History",
+          "url": "/pages/our-history",
+          "children": []
+        },
+        {
+          "label": "Constitution and Policies",
+          "url": "/pages/constitution-and-policies",
+          "children": []
+        },
+        {
+          "label": "Safeguarding",
+          "url": "/pages/safeguarding",
+          "children": []
+        },
+        {
+          "label": "Meeting Minutes",
+          "url": "/meeting-minutes",
+          "children": []
+        }
+      ]
     },
     {
       "label": "Membership",
-      "url": "/events",
+      "url": "/pages/types-of-membership",
       "children": [
         {
           "label": "Spond",
@@ -51,7 +98,7 @@
     },
     {
       "label": "Event Reports",
-      "url": "/news",
+      "url": "pages/event-reports",
       "children": [
         {
           "label": "2023 Spring Marathons",
@@ -80,15 +127,19 @@
   "socials": [
     {
       "platform": "Instagram",
-      "url": "https://instagram.com/etonmanorrc"
+      "url": "https://www.instagram.com/etonmanorac/"
     },
     {
       "platform": "Strava",
-      "url": "https://strava.com/clubs/etonmanor"
+      "url": "https://www.strava.com/clubs/eton-manor-ac"
     },
     {
       "platform": "Facebook",
-      "url": "https://facebook.com/etonmanorrc"
+      "url": "https://www.facebook.com/EtonManorAC"
+    },
+    {
+      "platform": "X",
+      "url": "https://x.com/etonmanorac"
     }
   ]
 }

@@ -1,0 +1,64 @@
+---
+import { marked } from 'marked';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FixtureCard from '../components/FixtureCard.astro';
+import raceFixturesPage from '../data/race-fixtures.json';
+
+const contentHtml = raceFixturesPage.content ? await marked.parse(raceFixturesPage.content) : '';
+
+const allFixtures = await getCollection('fixtures');
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+const upcoming = allFixtures
+  .filter((f) => f.data.date >= now)
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const past = allFixtures
+  .filter((f) => f.data.date < now)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout title={`${raceFixturesPage.title} — Eton Manor Running Club`}>
+  {raceFixturesPage.heroImage && (
+    <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
+      <img
+        src={raceFixturesPage.heroImage}
+        alt=""
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="relative z-10 flex h-full items-center justify-center px-6 text-center">
+        <h1 class="text-4xl uppercase tracking-wide text-paper">{raceFixturesPage.title}</h1>
+      </div>
+    </div>
+  )}
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    {!raceFixturesPage.heroImage && (
+      <h1 class="mb-6 text-4xl uppercase tracking-wide">{raceFixturesPage.title}</h1>
+    )}
+    {contentHtml && <div class="prose mb-8" set:html={contentHtml} />}
+
+    <h2 class="mb-8 text-3xl uppercase tracking-wide">Upcoming Fixtures</h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {upcoming.map((fixture) => (
+        <FixtureCard
+          name={fixture.data.name}
+          date={fixture.data.date}
+          distance={fixture.data.distance}
+          description={fixture.data.description}
+        />
+      ))}
+    </div>
+
+    <h2 class="mb-8 mt-16 text-3xl uppercase tracking-wide">Past Fixtures</h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {past.map((fixture) => (
+        <FixtureCard
+          name={fixture.data.name}
+          date={fixture.data.date}
+          distance={fixture.data.distance}
+          description={fixture.data.description}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

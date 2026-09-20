@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const results = await getCollection('results');
+  return results.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+<BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="mb-6 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
+    {entry.data.description && <p class="mb-8 whitespace-pre-line">{entry.data.description}</p>}
+    <ul class="flex flex-col gap-3">
+      {entry.data.links.map((link) => (
+        <li>
+          <a
+            href={link.file}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block rounded-xl bg-paper p-4 font-heading text-lg shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </article>
+</BaseLayout>

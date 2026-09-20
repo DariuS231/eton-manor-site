@@ -1,7 +1,12 @@
 ---
-name: "Club Vest"
-description: "The classic Eton Manor racing vest."
-image: "/uploads/kit/placeholder-vest.svg"
+name: Club Vest
+description: The classic Eton Manor racing vest.
+image: ''
 priceGBP: 20
-sizes: ["XS", "S", "M", "L", "XL"]
+sizes:
+  - XS
+  - S
+  - M
+  - L
+  - XL
 ---

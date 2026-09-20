@@ -134,6 +134,38 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "File", name: "file", widget: "file" }
 
+  - name: "fixtures"
+    label: "Race Fixtures"
+    folder: "src/content/fixtures"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "name"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - label: "Distance"
+        name: "distance"
+        widget: "select"
+        options: ["5K", "5 Miles", "10K", "10 Miles", "Half Marathon", "Marathon", "Ultra"]
+
+  - name: "results"
+    label: "Results"
+    folder: "src/content/results"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "{{media_folder}}/results"
+    public_folder: "{{public_folder}}/results"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - label: "Result Documents"
+        name: "links"
+        widget: "list"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "File", name: "file", widget: "file" }
+
   - name: "kit"
     label: "Club Kit"
     folder: "src/content/kit"
@@ -172,6 +204,48 @@ collections:
             widget: "list"
             required: false
             field: { label: "Image", name: "image", widget: "image" }
+      - name: "team"
+        label: "Team Page"
+        file: "src/data/team.json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Intro Text", name: "introText", widget: "markdown", required: false }
+      - name: "privacy-policy"
+        label: "Privacy Policy"
+        file: "src/data/privacy-policy.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+          - { label: "Content", name: "content", widget: "markdown", required: false }
+      - name: "right-to-be-forgotten"
+        label: "Right to be Forgotten"
+        file: "src/data/right-to-be-forgotten.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+          - { label: "Content", name: "content", widget: "markdown", required: false }
+      - name: "race-fixtures"
+        label: "Race Fixtures Page"
+        file: "src/data/race-fixtures.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+          - { label: "Content", name: "content", widget: "markdown", required: false }
+      - name: "results"
+        label: "Results Page"
+        file: "src/data/results.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+          - { label: "Content", name: "content", widget: "markdown", required: false }
       - name: "settings"
         label: "Site Settings"
         file: "src/data/settings.json"

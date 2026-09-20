@@ -73,6 +73,30 @@ const meetingMinutes = defineCollection({
   }),
 });
 
+const fixtures = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/fixtures' }),
+  schema: z.object({
+    name: z.string(),
+    date: z.coerce.date(),
+    description: z.string().optional(),
+    distance: z.enum(['5K', '5 Miles', '10K', '10 Miles', 'Half Marathon', 'Marathon', 'Ultra']),
+  }),
+});
+
+const results = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/results' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    links: z.array(
+      z.object({
+        label: z.string(),
+        file: z.string(),
+      })
+    ),
+  }),
+});
+
 const kit = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/kit' }),
   schema: z.object({
@@ -92,5 +116,7 @@ export const collections = {
   contentPages,
   documents,
   meetingMinutes,
+  fixtures,
+  results,
   kit,
 };

@@ -1,7 +1,11 @@
 ---
+import { marked } from 'marked';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TeamCard from '../components/TeamCard.astro';
+import teamPage from '../data/team.json';
+
+const introHtml = teamPage.introText ? await marked.parse(teamPage.introText) : '';
 
 const team = (await getCollection('team')).sort((a, b) => {
   const aOrder = a.data.order;
@@ -17,9 +21,10 @@ const teamWithBios = await Promise.all(
   team.map(async (member) => ({ member, ...(await render(member)) })),
 );
 ---
-<BaseLayout title="Meet the Team — Eton Manor Running Club">
+<BaseLayout title={`${teamPage.title} — Eton Manor Running Club`}>
   <section class="mx-auto max-w-5xl px-6 py-16">
-    <h1 class="mb-8 text-4xl uppercase tracking-wide">Meet the Team</h1>
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">{teamPage.title}</h1>
+    {introHtml && <div class="prose mb-8" set:html={introHtml} />}
     <div class="grid gap-6 sm:grid-cols-3">
       {teamWithBios.map(({ member, Content }) => (
         <TeamCard
