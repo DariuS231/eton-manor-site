@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/formatDate';
+
+const minutes = (await getCollection('meetingMinutes')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+<BaseLayout title="Meeting Minutes — Eton Manor Running Club">
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">Meeting Minutes</h1>
+    <p>Here is an archive of club committee minutes, if you have anything you wish to be on the next meeting please get in touch with a committee member.</p>
+    <ul class="flex flex-col gap-4">
+      {minutes.map((entry) => (
+        <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+          <p class="text-xs font-semibold uppercase tracking-wide text-navy">{formatDate(entry.data.date)}</p>
+          <a
+            href={entry.data.file}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-xl"
+          >
+            {entry.data.title}
+          </a>
+          {entry.data.description && <p class="mt-1 text-sm">{entry.data.description}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

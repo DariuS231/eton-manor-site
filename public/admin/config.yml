@@ -121,6 +121,19 @@ collections:
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "File", name: "file", widget: "file" }
 
+  - name: "meeting-minutes"
+    label: "Meeting Minutes"
+    folder: "src/content/meeting-minutes"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "{{media_folder}}/meeting-minutes"
+    public_folder: "{{public_folder}}/meeting-minutes"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "File", name: "file", widget: "file" }
+
   - name: "kit"
     label: "Club Kit"
     folder: "src/content/kit"

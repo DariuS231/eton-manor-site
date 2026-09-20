@@ -63,6 +63,16 @@ const documents = defineCollection({
   }),
 });
 
+const meetingMinutes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/meeting-minutes' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    description: z.string().optional(),
+    file: z.string(),
+  }),
+});
+
 const kit = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/kit' }),
   schema: z.object({
@@ -74,4 +84,13 @@ const kit = defineCollection({
   }),
 });
 
-export const collections = { news, events, team, sponsors, contentPages, documents, kit };
+export const collections = {
+  news,
+  events,
+  team,
+  sponsors,
+  contentPages,
+  documents,
+  meetingMinutes,
+  kit,
+};
