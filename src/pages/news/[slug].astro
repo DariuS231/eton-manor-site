@@ -17,6 +17,13 @@ const formattedDate = formatDate(entry.data.date);
 ---
 <BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
   <article class="mx-auto max-w-3xl px-6 py-16">
+    {entry.data.heroImage && (
+      <img
+        src={entry.data.heroImage}
+        alt=""
+        class="mb-6 aspect-[21/9] w-full rounded-xl object-cover shadow-card"
+      />
+    )}
     <p class="mb-1 text-sm">{formattedDate}</p>
     <h1 class="mb-6 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
     <div class="prose">

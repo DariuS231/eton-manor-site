@@ -7,6 +7,7 @@ const news = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     excerpt: z.string(),
+    heroImage: z.string().optional(),
   }),
 });
 
@@ -40,4 +41,13 @@ const sponsors = defineCollection({
   }),
 });
 
-export const collections = { news, events, team, sponsors };
+const contentPages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/content-pages' }),
+  schema: z.object({
+    title: z.string(),
+    excerpt: z.string(),
+    heroImage: z.string().optional(),
+  }),
+});
+
+export const collections = { news, events, team, sponsors, contentPages };

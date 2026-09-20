@@ -16,6 +16,7 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "events"
@@ -50,6 +51,17 @@ collections:
       - { label: "Role", name: "role", widget: "string" }
       - { label: "Photo", name: "photo", widget: "image", required: false }
       - { label: "Bio", name: "body", widget: "markdown", body: true, required: false }
+
+  - name: "content-pages"
+    label: "Content Pages"
+    folder: "src/content/content-pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "sponsors"
     label: "Sponsors"
@@ -87,7 +99,7 @@ collections:
         file: "src/data/about.json"
         fields:
           - { label: "Heading", name: "heading", widget: "string" }
-          - { label: "Body", name: "body", widget: "text" }
+          - { label: "Body", name: "body", widget: "markdown" }
       - name: "contact"
         label: "Contact Page"
         file: "src/data/contact.json"
