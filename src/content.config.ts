@@ -59,4 +59,15 @@ const documents = defineCollection({
   }),
 });
 
-export const collections = { news, events, team, sponsors, contentPages, documents };
+const kit = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/kit' }),
+  schema: z.object({
+    name: z.string(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+    priceGBP: z.number().positive(),
+    sizes: z.array(z.string()).optional(),
+  }),
+});
+
+export const collections = { news, events, team, sponsors, contentPages, documents, kit };
