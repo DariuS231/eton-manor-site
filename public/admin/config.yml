@@ -12,6 +12,8 @@ collections:
     folder: "src/content/news"
     create: true
     slug: "{{slug}}"
+    media_folder: "{{media_folder}}/news"
+    public_folder: "{{public_folder}}/news"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -46,6 +48,8 @@ collections:
     create: true
     slug: "{{slug}}"
     identifier_field: "name"
+    media_folder: "{{media_folder}}/team"
+    public_folder: "{{public_folder}}/team"
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }
@@ -57,6 +61,8 @@ collections:
     folder: "src/content/content-pages"
     create: true
     slug: "{{slug}}"
+    media_folder: "{{media_folder}}/content-pages"
+    public_folder: "{{public_folder}}/content-pages"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
@@ -69,6 +75,8 @@ collections:
     create: true
     slug: "{{slug}}"
     identifier_field: "name"
+    media_folder: "{{media_folder}}/sponsors"
+    public_folder: "{{public_folder}}/sponsors"
     fields:
       - { label: "Name", name: "name", widget: "string" }
       - label: "Link"
@@ -77,12 +85,26 @@ collections:
         pattern: ["^https?://", "Must start with http:// or https://"]
       - { label: "Logo", name: "logo", widget: "image" }
 
+  - name: "documents"
+    label: "Documents"
+    folder: "src/content/documents"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "{{media_folder}}/documents"
+    public_folder: "{{public_folder}}/documents"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "File", name: "file", widget: "file" }
+
   - name: "pages"
     label: "Pages"
     files:
       - name: "home"
         label: "Home Page"
         file: "src/data/home.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
         fields:
           - { label: "Hero Heading", name: "heroHeading", widget: "string" }
           - { label: "Hero Subheading", name: "heroSubheading", widget: "text" }
@@ -111,6 +133,8 @@ collections:
       - name: "settings"
         label: "Site Settings"
         file: "src/data/settings.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
         fields:
           - { label: "Site Title", name: "siteTitle", widget: "string" }
           - { label: "Logo", name: "logo", widget: "image", required: false }
@@ -119,7 +143,14 @@ collections:
             widget: "list"
             fields:
               - { label: "Label", name: "label", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
+              - { label: "URL", name: "url", widget: "string", required: false }
+              - label: "Submenu Items"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
           - { label: "Footer Text", name: "footerText", widget: "string" }
           - label: "Social Links"
             name: "socials"

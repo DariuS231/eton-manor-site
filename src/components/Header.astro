@@ -1,5 +1,18 @@
 ---
 import settings from '../data/settings.json';
+
+interface NavChild {
+  label: string;
+  url: string;
+}
+
+interface NavLink {
+  label: string;
+  url?: string;
+  children?: NavChild[];
+}
+
+const navLinks = settings.navLinks as NavLink[];
 ---
 <header class="sticky top-0 z-50 bg-navy/95 text-paper backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -13,14 +26,55 @@ import settings from '../data/settings.json';
 
     <nav class="hidden sm:block">
       <ul class="flex gap-1 sm:gap-2 font-[family-name:--font-body] text-sm uppercase tracking-wide">
-        {settings.navLinks.map((link) => (
-          <li>
-            <a
-              href={link.url}
-              class="block rounded-full px-3 py-1.5 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
-            >
-              {link.label}
-            </a>
+        {navLinks.map((link, i) => (
+          <li class="relative">
+            {link.children && link.children.length > 0 ? (
+              <div class="flex items-center">
+                {link.url ? (
+                  <a
+                    href={link.url}
+                    class="block rounded-full py-1.5 pl-3 pr-1 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <span class="block rounded-full py-1.5 pl-3 pr-1">{link.label}</span>
+                )}
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={`desktop-dropdown-${i}`}
+                  aria-label={`${link.label} submenu`}
+                  class="dropdown-toggle rounded-full p-1.5 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                >
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+                <ul
+                  id={`desktop-dropdown-${i}`}
+                  class="dropdown-panel absolute left-0 top-full z-10 mt-1 hidden min-w-[10rem] rounded-xl bg-navy py-2 shadow-card-hover"
+                >
+                  {link.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.url}
+                        class="block px-4 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <a
+                href={link.url}
+                class="block rounded-full px-3 py-1.5 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+              >
+                {link.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -45,14 +99,56 @@ import settings from '../data/settings.json';
 
   <nav id="mobile-nav" class="hidden sm:hidden">
     <ul class="flex flex-col gap-1 px-6 pb-4 font-[family-name:--font-body] text-sm uppercase tracking-wide">
-      {settings.navLinks.map((link) => (
+      {navLinks.map((link, i) => (
         <li>
-          <a
-            href={link.url}
-            class="block rounded-full px-3 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
-          >
-            {link.label}
-          </a>
+          {link.children && link.children.length > 0 ? (
+            <>
+              <div class="flex items-center justify-between">
+                {link.url ? (
+                  <a
+                    href={link.url}
+                    class="block flex-1 rounded-full px-3 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <span class="block flex-1 px-3 py-2">{link.label}</span>
+                )}
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={`mobile-dropdown-${i}`}
+                  aria-label={`${link.label} submenu`}
+                  class="dropdown-toggle rounded-full p-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                >
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+              </div>
+              <div id={`mobile-dropdown-${i}`} class="dropdown-panel hidden">
+                <ul class="flex flex-col gap-1 py-1 pl-6">
+                  {link.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.url}
+                        class="block rounded-full px-3 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <a
+              href={link.url}
+              class="block rounded-full px-3 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+            >
+              {link.label}
+            </a>
+          )}
         </li>
       ))}
     </ul>
@@ -72,4 +168,30 @@ import settings from '../data/settings.json';
     iconOpen?.classList.toggle('hidden');
     iconClose?.classList.toggle('hidden');
   });
+
+  function panelFor(btn: Element): HTMLElement | null {
+    const id = btn.getAttribute('aria-controls');
+    return id ? document.getElementById(id) : null;
+  }
+
+  function closeAllDropdowns(except?: Element) {
+    document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach((btn) => {
+      if (btn === except) return;
+      btn.setAttribute('aria-expanded', 'false');
+      panelFor(btn)?.classList.add('hidden');
+    });
+  }
+
+  document.querySelectorAll('.dropdown-toggle').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const dropdownPanel = panelFor(btn);
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      closeAllDropdowns(btn);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      dropdownPanel?.classList.toggle('hidden');
+    });
+  });
+
+  document.addEventListener('click', () => closeAllDropdowns());
 </script>

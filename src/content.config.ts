@@ -50,4 +50,13 @@ const contentPages = defineCollection({
   }),
 });
 
-export const collections = { news, events, team, sponsors, contentPages };
+const documents = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/documents' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    file: z.string(),
+  }),
+});
+
+export const collections = { news, events, team, sponsors, contentPages, documents };
