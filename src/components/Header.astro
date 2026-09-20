@@ -22,7 +22,7 @@ const navLinks = settings.navLinks as NavLink[];
 ---
 <header class="sticky top-0 z-50 bg-navy/95 text-paper backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="font-[family-name:--font-heading] text-xl sm:text-2xl font-semibold uppercase tracking-wide">
+    <a href="/" class="font-heading text-xl sm:text-2xl font-semibold uppercase tracking-wide">
       {settings.logo ? (
         <img src={settings.logo} alt={settings.siteTitle} class="h-8 sm:h-10 w-auto" />
       ) : (
@@ -32,7 +32,7 @@ const navLinks = settings.navLinks as NavLink[];
 
     <div class="flex items-center gap-1">
       <nav class="hidden sm:block">
-      <ul class="flex gap-1 sm:gap-2 font-[family-name:--font-body] text-sm uppercase tracking-wide">
+      <ul class="flex gap-1 sm:gap-2 font-heading text-base uppercase tracking-wide">
         {navLinks.map((link, i) => (
           <li class="relative">
             {link.children && link.children.length > 0 ? (
@@ -61,27 +61,32 @@ const navLinks = settings.navLinks as NavLink[];
                 {link.children.some((child) => child.children && child.children.length > 0) ? (
                   <div
                     id={`desktop-dropdown-${i}`}
-                    class="dropdown-panel absolute left-0 top-full z-10 mt-1 hidden min-w-[24rem] rounded-xl bg-navy shadow-card-hover"
+                    class="dropdown-panel absolute left-1/2 top-full z-10 mt-2 hidden max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-xl bg-navy shadow-card-hover"
                   >
-                    <div class="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-6 p-6">
+                    <div
+                      class="grid divide-x divide-paper/10 p-8"
+                      style={`grid-template-columns: repeat(${Math.min(link.children.length, 4)}, minmax(12rem, 1fr));`}
+                    >
                       {link.children.map((child) => (
-                        <div>
+                        <div class="px-6 first:pl-0 last:pr-0">
                           {child.url ? (
                             <a
                               href={child.url}
-                              class="mb-2 block font-semibold uppercase tracking-wide text-powder transition-colors duration-200 hover:text-white"
+                              class="mb-3 block border-b border-paper/10 pb-2 font-heading text-lg uppercase tracking-wide text-powder transition-colors duration-200 hover:text-white"
                             >
                               {child.label}
                             </a>
                           ) : (
-                            <p class="mb-2 font-semibold uppercase tracking-wide text-powder">{child.label}</p>
+                            <p class="mb-3 border-b border-paper/10 pb-2 font-heading text-lg uppercase tracking-wide text-powder">
+                              {child.label}
+                            </p>
                           )}
                           <ul class="flex flex-col gap-1">
                             {(child.children ?? []).map((grandchild) => (
                               <li>
                                 <a
                                   href={grandchild.url}
-                                  class="block rounded-full px-2 py-1.5 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                                  class="block rounded-full px-2 py-1.5 text-sm transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
                                 >
                                   {grandchild.label}
                                 </a>
@@ -158,7 +163,7 @@ const navLinks = settings.navLinks as NavLink[];
   </div>
 
   <nav id="mobile-nav" class="hidden sm:hidden">
-    <ul class="flex flex-col gap-1 px-6 pb-4 font-[family-name:--font-body] text-sm uppercase tracking-wide">
+    <ul class="flex flex-col gap-1 px-6 pb-4 font-heading text-base uppercase tracking-wide">
       {navLinks.map((link, i) => (
         <li>
           {link.children && link.children.length > 0 ? (

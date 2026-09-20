@@ -17,7 +17,7 @@ const kit = await getCollection('kit');
               class="mb-4 aspect-square w-full rounded-lg object-cover"
             />
           )}
-          <h2 class="font-[family-name:--font-heading] text-xl">{item.data.name}</h2>
+          <h2 class="font-heading text-xl">{item.data.name}</h2>
           {item.data.description && <p class="mt-1 text-sm">{item.data.description}</p>}
           <p class="mt-2 font-semibold">£{item.data.priceGBP.toFixed(2)}</p>
           <form class="add-to-cart-form mt-4 flex flex-col gap-2" data-id={item.id}>

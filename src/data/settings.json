@@ -4,14 +4,27 @@
   "navLinks": [
     {
       "label": "The Club",
+      "url": "",
       "children": [
         {
           "label": "Youth Section",
-          "url": "/pages/youth-section"
+          "url": "/pages/youth-section",
+          "children": []
         },
         {
           "label": "Social",
-          "url": "/pages/social"
+          "url": "/pages/social",
+          "children": []
+        },
+        {
+          "label": "Senior Section",
+          "url": "/pages/senior-section",
+          "children": [
+            {
+              "label": "Racing",
+              "url": "/pages/racing"
+            }
+          ]
         }
       ]
     },
@@ -32,7 +45,8 @@
     },
     {
       "label": "Club Kit",
-      "url": "/club-kit"
+      "url": "/club-kit",
+      "children": []
     }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",

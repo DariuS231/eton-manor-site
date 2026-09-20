@@ -75,7 +75,7 @@ const catalog = kit.map((item) => ({
       if (!product) {
         const info = document.createElement('div');
         const name = document.createElement('p');
-        name.className = 'font-[family-name:--font-heading] text-xl';
+        name.className = 'font-heading text-xl';
         name.textContent = 'Item no longer available';
         info.appendChild(name);
         li.appendChild(info);
@@ -90,7 +90,7 @@ const catalog = kit.map((item) => ({
       const info = document.createElement('div');
 
       const name = document.createElement('p');
-      name.className = 'font-[family-name:--font-heading] text-xl';
+      name.className = 'font-heading text-xl';
       name.textContent = item.size ? `${product.name} — ${item.size}` : product.name;
       info.appendChild(name);
 

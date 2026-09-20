@@ -18,7 +18,7 @@ const formattedDate = formatDate(date);
   class="block rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
 >
   <span class="text-xs font-semibold uppercase tracking-wide text-navy">{eventType}</span>
-  <h3 class="font-[family-name:--font-heading] text-xl">{title}</h3>
+  <h3 class="font-heading text-xl">{title}</h3>
   <p class="mt-1 text-sm">{formattedDate}{time ? ` · ${time}` : ''}</p>
   <p class="text-sm">{location}</p>
 </a>

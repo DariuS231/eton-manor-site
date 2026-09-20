@@ -82,7 +82,7 @@ const heroKeyframesCss = heroImages
       <ul class="grid gap-6 sm:grid-cols-3">
         {news.map((post) => (
           <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
-            <a href={`/news/${post.id}`} class="font-[family-name:--font-heading] text-xl">{post.data.title}</a>
+            <a href={`/news/${post.id}`} class="font-heading text-xl">{post.data.title}</a>
             <p class="mt-2 text-sm">{post.data.excerpt}</p>
           </li>
         ))}
@@ -95,7 +95,7 @@ const heroKeyframesCss = heroImages
     <ul class="grid gap-6 sm:grid-cols-3">
       {events.map((event) => (
         <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
-          <a href={`/events/${event.id}`} class="font-[family-name:--font-heading] text-xl">{event.data.title}</a>
+          <a href={`/events/${event.id}`} class="font-heading text-xl">{event.data.title}</a>
           <p class="mt-2 text-sm">{event.data.location}</p>
         </li>
       ))}
