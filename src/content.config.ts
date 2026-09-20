@@ -8,6 +8,7 @@ const news = defineCollection({
     date: z.coerce.date(),
     excerpt: z.string(),
     heroImage: z.string().optional(),
+    gallery: z.array(z.string()).optional(),
   }),
 });
 
@@ -47,6 +48,7 @@ const contentPages = defineCollection({
     title: z.string(),
     excerpt: z.string(),
     heroImage: z.string().optional(),
+    gallery: z.array(z.string()).optional(),
   }),
 });
 

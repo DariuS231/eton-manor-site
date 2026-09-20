@@ -1,6 +1,5 @@
 ---
-name: "Priya Nair"
-role: "Club Coach"
+name: Richard Parr
+role: Club Secretary
+photo: /uploads/team/SF_Sun_D4_277-9587.jpg
 ---
-
-Priya coaches our beginner and improver groups, helping new runners build confidence and consistency.

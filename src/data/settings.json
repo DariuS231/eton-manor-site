@@ -36,17 +36,44 @@
     {
       "label": "Membership",
       "url": "/events",
-      "children": []
+      "children": [
+        {
+          "label": "Spond",
+          "url": "/pages/spond",
+          "children": []
+        },
+        {
+          "label": "Club Kit",
+          "url": "/club-kit",
+          "children": []
+        }
+      ]
     },
     {
       "label": "Event Reports",
       "url": "/news",
-      "children": []
-    },
-    {
-      "label": "Club Kit",
-      "url": "/club-kit",
-      "children": []
+      "children": [
+        {
+          "label": "2023 Spring Marathons",
+          "url": "/pages/2023-spring-marathons",
+          "children": []
+        },
+        {
+          "label": "2022 Spitfire Scramble",
+          "url": "/pages/2022-spitfire-scramble",
+          "children": []
+        },
+        {
+          "label": "2021/2022 Chingford League",
+          "url": "/pages/2021-22-chingford-league",
+          "children": []
+        },
+        {
+          "label": "2021 Autumn Marathons",
+          "url": "/pages/2021-autumn-marathons",
+          "children": []
+        }
+      ]
     }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",

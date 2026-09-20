@@ -19,6 +19,11 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Photo", name: "photo", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "events"
@@ -67,6 +72,11 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Photo", name: "photo", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "sponsors"

@@ -1,7 +1,5 @@
 ---
-name: Marcus Obi
-role: Head Coach
-photo: /uploads/team/IMG_0088-683x1024.jpg
+name: Jane Rukin-White
+role: Race Team Captain
+photo: /uploads/team/SF_Sat_D4_673-2134.jpg
 ---
-
-UKA Level 3 coach specialising in middle-distance training. Leads Tuesday track sessions.

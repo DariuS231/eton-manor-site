@@ -1,0 +1,115 @@
+---
+interface Props {
+  images: string[];
+}
+
+const { images } = Astro.props;
+---
+{images.length > 0 && (
+  <div data-gallery>
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {images.map((src, i) => (
+        <button
+          type="button"
+          class="gallery-thumb aspect-square overflow-hidden rounded-lg"
+          data-index={i}
+        >
+          <img
+            src={src}
+            alt=""
+            class="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
+          />
+        </button>
+      ))}
+    </div>
+
+    <div
+      class="gallery-lightbox fixed inset-0 z-50 hidden items-center justify-center bg-ink/90 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo gallery"
+    >
+      <button
+        type="button"
+        class="gallery-close absolute right-4 top-4 rounded-full p-2 text-paper hover:bg-paper/10"
+        aria-label="Close gallery"
+      >
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="gallery-prev absolute left-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-paper hover:bg-paper/10"
+        aria-label="Previous photo"
+      >
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <img class="gallery-image max-h-[85vh] max-w-full rounded-lg object-contain" src="" alt="" />
+      <button
+        type="button"
+        class="gallery-next absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-paper hover:bg-paper/10"
+        aria-label="Next photo"
+      >
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      <p class="gallery-counter absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-paper/80"></p>
+    </div>
+  </div>
+)}
+
+<script define:vars={{ images }}>
+  const galleryEl = document.querySelector('[data-gallery]');
+
+  if (galleryEl) {
+    const lightbox = galleryEl.querySelector('.gallery-lightbox');
+    const imgEl = galleryEl.querySelector('.gallery-image');
+    const counterEl = galleryEl.querySelector('.gallery-counter');
+    const closeBtn = galleryEl.querySelector('.gallery-close');
+    const prevBtn = galleryEl.querySelector('.gallery-prev');
+    const nextBtn = galleryEl.querySelector('.gallery-next');
+    let currentIndex = 0;
+
+    function show(index) {
+      currentIndex = (index + images.length) % images.length;
+      imgEl.src = images[currentIndex];
+      counterEl.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    function open(index) {
+      show(index);
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    galleryEl.querySelectorAll('.gallery-thumb').forEach((btn) => {
+      btn.addEventListener('click', () => open(Number(btn.dataset.index)));
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => show(currentIndex - 1));
+    nextBtn.addEventListener('click', () => show(currentIndex + 1));
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.classList.contains('hidden')) return;
+      if (event.key === 'Escape') close();
+      if (event.key === 'ArrowLeft') show(currentIndex - 1);
+      if (event.key === 'ArrowRight') show(currentIndex + 1);
+    });
+  }
+</script>
