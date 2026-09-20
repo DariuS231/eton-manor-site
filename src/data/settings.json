@@ -4,7 +4,6 @@
   "navLinks": [
     {
       "label": "The Club",
-      "url": "/about",
       "children": [
         {
           "label": "Youth Section",
