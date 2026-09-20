@@ -30,7 +30,7 @@
     },
     {
       "label": "About Us",
-      "url": "/team",
+      "url": "/pages/about-us",
       "children": []
     },
     {

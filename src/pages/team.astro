@@ -3,7 +3,16 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TeamCard from '../components/TeamCard.astro';
 
-const team = await getCollection('team');
+const team = (await getCollection('team')).sort((a, b) => {
+  const aOrder = a.data.order;
+  const bOrder = b.data.order;
+  const aHasOrder = typeof aOrder === 'number';
+  const bHasOrder = typeof bOrder === 'number';
+  if (aHasOrder && bHasOrder) return aOrder - bOrder;
+  if (aHasOrder) return -1;
+  if (bHasOrder) return 1;
+  return a.data.name.localeCompare(b.data.name);
+});
 const teamWithBios = await Promise.all(
   team.map(async (member) => ({ member, ...(await render(member)) })),
 );
@@ -13,7 +22,12 @@ const teamWithBios = await Promise.all(
     <h1 class="mb-8 text-4xl uppercase tracking-wide">Meet the Team</h1>
     <div class="grid gap-6 sm:grid-cols-3">
       {teamWithBios.map(({ member, Content }) => (
-        <TeamCard name={member.data.name} role={member.data.role} photo={member.data.photo}>
+        <TeamCard
+          name={member.data.name}
+          role={member.data.role}
+          photo={member.data.photo}
+          photoFocalPoint={member.data.photoFocalPoint}
+        >
           <Content />
         </TeamCard>
       ))}

@@ -30,6 +30,8 @@ const team = defineCollection({
     name: z.string(),
     role: z.string(),
     photo: z.string().optional(),
+    photoFocalPoint: z.enum(['top', 'center', 'bottom']).nullish(),
+    order: z.number().nullish(),
   }),
 });
 
