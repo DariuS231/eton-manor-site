@@ -30,6 +30,10 @@
       "label": "Event Reports",
       "url": "/news",
       "children": []
+    },
+    {
+      "label": "Club Kit",
+      "url": "/club-kit"
     }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",

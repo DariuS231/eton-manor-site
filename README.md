@@ -78,18 +78,33 @@ script — never edit that file by hand).
    live-mode key before accepting real orders).
 2. In Netlify: **Site configuration → Environment variables** → add
    `STRIPE_SECRET_KEY` with that value. It's never committed to this repo.
-3. To test locally before deploying: run `netlify dev` (requires the
-   [Netlify CLI](https://docs.netlify.com/cli/get-started/)), with a local
-   `.env` file (git-ignored) containing `STRIPE_SECRET_KEY=sk_test_...`.
-   Add a kit item or two via the CMS or by hand in `src/content/kit/`, add
-   one to the cart at `/club-kit`, and check out — you should land on a
-   real Stripe test-mode Checkout page. Use
+3. `netlify dev` runs Astro's dev server, not `npm run build` — so before
+   your first local test (or after any change to `src/content/kit/`), run
+   `npm run build` once so `netlify/functions/kit-catalog.json` actually
+   exists; without it, the checkout function fails to load and every
+   checkout attempt fails with no clear error. Then run `netlify dev`
+   (requires the [Netlify CLI](https://docs.netlify.com/cli/get-started/)),
+   with a local `.env` file (git-ignored) containing
+   `STRIPE_SECRET_KEY=sk_test_...`. Add a kit item or two via the CMS or by
+   hand in `src/content/kit/` (filenames must be simple lowercase,
+   hyphenated slugs, e.g. `club-vest.md` — the build now fails loudly if
+   not, since the catalog's item ids must match Astro's own), add one to
+   the cart at `/club-kit`, and check out — you should land on a real
+   Stripe test-mode Checkout page. Use
    [Stripe's documented test card number](https://docs.stripe.com/testing)
    to complete a test payment and confirm you're redirected back to
    `/club-kit/success` with the cart cleared afterward.
-4. No code in this repo can exercise a real Stripe API call without your
-   own key — the check in step 3 is the one piece of this feature that
-   only you can verify.
+4. `netlify dev` runs the checkout function from source, so it can't catch
+   every deployment-specific issue (exactly how Netlify bundles the
+   function's files when it actually deploys). Before accepting real
+   orders, complete one test-mode checkout against a real **Netlify
+   deploy preview** as well, not only locally.
+5. No code in this repo can exercise a real Stripe API call without your
+   own key — the checks in steps 3-4 are the one piece of this feature
+   that only you can verify. Completed orders show up in your Stripe
+   dashboard (Payments) — Stripe can also email you a notification per
+   payment if you enable that in your Stripe account settings. Nothing in
+   this repo records orders anywhere else.
 
 ## Deployment
 

@@ -33,10 +33,21 @@ const catalog = kit.map((item) => ({
 <script type="application/json" id="kit-catalog" set:html={JSON.stringify(catalog)} />
 
 <script>
-  import { getCart, removeFromCart } from '../../lib/cart.js';
+  import { getCart, removeFromCart, updateQuantity } from '../../lib/cart.js';
 
   const catalogEl = document.getElementById('kit-catalog');
   const catalog = JSON.parse(catalogEl.textContent);
+
+  function createRemoveButton(item) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'remove-line rounded-full px-3 py-1.5 text-sm uppercase hover:bg-navy/10';
+    btn.textContent = 'Remove';
+    btn.addEventListener('click', () => {
+      removeFromCart(item.id, item.size);
+    });
+    return btn;
+  }
 
   function render() {
     const items = getCart();
@@ -55,42 +66,80 @@ const catalog = kit.map((item) => ({
 
     linesEl.innerHTML = '';
     let subtotal = 0;
+
     for (const item of items) {
       const product = catalog.find((p) => p.id === item.id);
-      if (!product) continue;
+      const li = document.createElement('li');
+      li.className = 'flex items-center justify-between rounded-xl bg-paper p-4 shadow-card';
+
+      if (!product) {
+        const info = document.createElement('div');
+        const name = document.createElement('p');
+        name.className = 'font-[family-name:--font-heading] text-xl';
+        name.textContent = 'Item no longer available';
+        info.appendChild(name);
+        li.appendChild(info);
+        li.appendChild(createRemoveButton(item));
+        linesEl.appendChild(li);
+        continue;
+      }
+
       const lineTotal = product.priceGBP * item.quantity;
       subtotal += lineTotal;
 
-      const li = document.createElement('li');
-      li.className = 'flex items-center justify-between rounded-xl bg-paper p-4 shadow-card';
-      li.innerHTML = `
-        <div>
-          <p class="font-[family-name:--font-heading] text-xl">${product.name}${item.size ? ' — ' + item.size : ''}</p>
-          <p class="text-sm">£${product.priceGBP.toFixed(2)} × ${item.quantity} = £${lineTotal.toFixed(2)}</p>
-        </div>
-        <button type="button" class="remove-line rounded-full px-3 py-1.5 text-sm uppercase hover:bg-navy/10" data-id="${item.id}" data-size="${item.size ?? ''}">
-          Remove
-        </button>
-      `;
+      const info = document.createElement('div');
+
+      const name = document.createElement('p');
+      name.className = 'font-[family-name:--font-heading] text-xl';
+      name.textContent = item.size ? `${product.name} — ${item.size}` : product.name;
+      info.appendChild(name);
+
+      const priceLine = document.createElement('p');
+      priceLine.className = 'text-sm flex items-center gap-2';
+
+      const priceText = document.createElement('span');
+      priceText.textContent = `£${product.priceGBP.toFixed(2)} ×`;
+      priceLine.appendChild(priceText);
+
+      const qtyInput = document.createElement('input');
+      qtyInput.type = 'number';
+      qtyInput.min = '1';
+      qtyInput.value = String(item.quantity);
+      qtyInput.className = 'w-16 rounded-lg border border-navy/40 px-2 py-1 text-center';
+      qtyInput.addEventListener('change', () => {
+        const newQuantity = Number(qtyInput.value);
+        updateQuantity(item.id, item.size, newQuantity);
+      });
+      priceLine.appendChild(qtyInput);
+
+      const totalText = document.createElement('span');
+      totalText.textContent = `= £${lineTotal.toFixed(2)}`;
+      priceLine.appendChild(totalText);
+
+      info.appendChild(priceLine);
+      li.appendChild(info);
+      li.appendChild(createRemoveButton(item));
       linesEl.appendChild(li);
     }
     subtotalEl.textContent = subtotal.toFixed(2);
-
-    linesEl.querySelectorAll('.remove-line').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        removeFromCart(btn.dataset.id, btn.dataset.size || null);
-        render();
-      });
-    });
   }
 
   render();
   document.addEventListener('cart:change', render);
 
   document.getElementById('checkout-button')?.addEventListener('click', async () => {
+    const button = document.getElementById('checkout-button');
     const errorEl = document.getElementById('checkout-error');
     errorEl.classList.add('hidden');
-    const items = getCart();
+
+    const items = getCart().filter((item) => catalog.some((p) => p.id === item.id));
+    if (items.length === 0) {
+      errorEl.textContent = 'Your cart has no items available to check out.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    button.disabled = true;
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -103,8 +152,9 @@ const catalog = kit.map((item) => ({
       }
       window.location.href = data.url;
     } catch (err) {
-      errorEl.textContent = 'Something went wrong, please try again.';
+      errorEl.textContent = err.message || 'Something went wrong, please try again.';
       errorEl.classList.remove('hidden');
+      button.disabled = false;
     }
   });
 </script>

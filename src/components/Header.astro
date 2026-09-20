@@ -24,7 +24,8 @@ const navLinks = settings.navLinks as NavLink[];
       )}
     </a>
 
-    <nav class="hidden sm:block">
+    <div class="flex items-center gap-1">
+      <nav class="hidden sm:block">
       <ul class="flex gap-1 sm:gap-2 font-[family-name:--font-body] text-sm uppercase tracking-wide">
         {navLinks.map((link, i) => (
           <li class="relative">
@@ -111,6 +112,7 @@ const navLinks = settings.navLinks as NavLink[];
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
+    </div>
   </div>
 
   <nav id="mobile-nav" class="hidden sm:hidden">

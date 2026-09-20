@@ -3,14 +3,23 @@ import Stripe from 'stripe';
 
 const catalog = JSON.parse(readFileSync(new URL('./kit-catalog.json', import.meta.url), 'utf-8'));
 
+const MAX_CART_ITEMS = 50;
+const MAX_QUANTITY = 100;
+
 export class ValidationError extends Error {}
 
 export function buildCheckoutParams(cartItems, catalogData, origin) {
   if (!Array.isArray(cartItems) || cartItems.length === 0) {
     throw new ValidationError('Cart is empty.');
   }
+  if (cartItems.length > MAX_CART_ITEMS) {
+    throw new ValidationError('Cart has too many items.');
+  }
 
   const line_items = cartItems.map((cartItem) => {
+    if (!cartItem || typeof cartItem !== 'object' || typeof cartItem.id !== 'string') {
+      throw new ValidationError('Invalid cart item.');
+    }
     const product = catalogData.find((p) => p.id === cartItem.id);
     if (!product) {
       throw new ValidationError(`Unknown item: ${cartItem.id}`);
@@ -25,7 +34,7 @@ export function buildCheckoutParams(cartItems, catalogData, origin) {
     }
 
     const quantity = Number(cartItem.quantity);
-    if (!Number.isInteger(quantity) || quantity < 1) {
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) {
       throw new ValidationError(`Invalid quantity for ${product.name}.`);
     }
 
@@ -78,13 +87,14 @@ export default async (req) => {
   }
 
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' });
     const session = await stripe.checkout.sessions.create(params);
     return new Response(JSON.stringify({ url: session.url }), {
       status: 200,
       headers: jsonHeaders,
     });
-  } catch {
+  } catch (err) {
+    console.error('Stripe checkout session creation failed:', err);
     return new Response(JSON.stringify({ error: 'Unable to create checkout session.' }), {
       status: 500,
       headers: jsonHeaders,
