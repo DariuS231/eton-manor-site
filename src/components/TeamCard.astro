@@ -13,7 +13,9 @@ const initials =
     ? `${words[0][0]}${words[words.length - 1][0]}`
     : words[0].slice(0, 2);
 ---
-<div class="border border-navy/20 p-6 text-center">
+<div
+  class="rounded-xl bg-paper p-6 text-center shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+>
   {photo ? (
     <img
       src={photo}

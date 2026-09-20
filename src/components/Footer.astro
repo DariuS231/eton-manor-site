@@ -3,28 +3,49 @@ import { getCollection } from 'astro:content';
 import settings from '../data/settings.json';
 
 const sponsors = await getCollection('sponsors');
+
+const socialEmoji: Record<string, string> = {
+  Instagram: '📸',
+  Facebook: '📘',
+  Strava: '🏃',
+  X: '✖️',
+};
 ---
 <footer class="bg-ink text-paper">
   <div class="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-8 text-sm">
     {sponsors.length > 0 && (
-      <ul class="flex flex-wrap items-center justify-center gap-6">
-        {sponsors.map((sponsor) => (
-          <li>
-            <a href={sponsor.data.url} target="_blank" rel="noopener noreferrer">
-              <img
-                src={sponsor.data.logo}
-                alt={sponsor.data.name}
-                class="h-10 w-auto object-contain"
-              />
-            </a>
-          </li>
-        ))}
-      </ul>
+      <>
+        <ul class="flex flex-wrap items-center justify-center gap-6">
+          {sponsors.map((sponsor) => (
+            <li>
+              <a
+                href={sponsor.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <img
+                  src={sponsor.data.logo}
+                  alt={sponsor.data.name}
+                  class="h-16 w-auto object-contain"
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <hr class="my-2 w-24 border-paper/20" />
+      </>
     )}
-    <ul class="flex gap-4">
+    <ul class="flex gap-1">
       {settings.socials.map((social) => (
         <li>
-          <a href={social.url} class="hover:text-powder">{social.platform}</a>
+          <a
+            href={social.url}
+            class="flex items-center gap-1.5 rounded-full px-3 py-1.5 transition-colors duration-200 hover:bg-powder/10 hover:text-powder"
+          >
+            <span aria-hidden="true">{socialEmoji[social.platform] ?? '🔗'}</span>
+            {social.platform}
+          </a>
         </li>
       ))}
     </ul>

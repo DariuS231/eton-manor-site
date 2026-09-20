@@ -63,7 +63,7 @@ const heroKeyframesCss = heroImages
       <p class="mx-auto mt-4 max-w-2xl text-lg">{home.heroSubheading}</p>
       <a
         href={home.heroCtaUrl}
-        class="mt-8 inline-block bg-powder px-6 py-3 font-semibold uppercase tracking-wide text-ink hover:bg-white"
+        class="mt-8 inline-block rounded-full bg-powder px-6 py-3 font-semibold uppercase tracking-wide text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-card-hover"
       >
         {home.heroCtaLabel}
       </a>
@@ -76,23 +76,25 @@ const heroKeyframesCss = heroImages
     <p>{home.introBody}</p>
   </section>
 
-  <section class="mx-auto max-w-5xl px-6 py-12">
-    <h2 class="mb-6 text-3xl uppercase tracking-wide">Latest News</h2>
-    <ul class="grid gap-6 sm:grid-cols-3">
-      {news.map((post) => (
-        <li class="border border-navy/20 p-4">
-          <a href={`/news/${post.id}`} class="font-[family-name:--font-heading] text-xl">{post.data.title}</a>
-          <p class="mt-2 text-sm">{post.data.excerpt}</p>
-        </li>
-      ))}
-    </ul>
+  <section class="bg-navy/5 px-6 py-12">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="mb-6 text-3xl uppercase tracking-wide">Latest News</h2>
+      <ul class="grid gap-6 sm:grid-cols-3">
+        {news.map((post) => (
+          <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+            <a href={`/news/${post.id}`} class="font-[family-name:--font-heading] text-xl">{post.data.title}</a>
+            <p class="mt-2 text-sm">{post.data.excerpt}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 
   <section class="mx-auto max-w-5xl px-6 py-12">
     <h2 class="mb-6 text-3xl uppercase tracking-wide">Upcoming Events</h2>
     <ul class="grid gap-6 sm:grid-cols-3">
       {events.map((event) => (
-        <li class="border border-navy/20 p-4">
+        <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
           <a href={`/events/${event.id}`} class="font-[family-name:--font-heading] text-xl">{event.data.title}</a>
           <p class="mt-2 text-sm">{event.data.location}</p>
         </li>

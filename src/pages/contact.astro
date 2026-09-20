@@ -11,7 +11,7 @@ import settings from '../data/settings.json';
 
     <a
       href={contact.joinCtaUrl}
-      class="mb-10 inline-block bg-navy px-6 py-3 font-semibold uppercase tracking-wide text-paper hover:bg-navy/80"
+      class="mb-10 inline-block rounded-full bg-navy px-6 py-3 font-semibold uppercase tracking-wide text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy/80 hover:shadow-card-hover"
     >
       {contact.joinCtaLabel}
     </a>
@@ -21,24 +21,34 @@ import settings from '../data/settings.json';
       <input type="hidden" name="bot-field" />
       <label class="grid gap-1">
         <span class="text-sm font-semibold uppercase tracking-wide">Name</span>
-        <input type="text" name="name" required class="border border-navy/40 px-3 py-2" />
+        <input type="text" name="name" required class="rounded-lg border border-navy/40 px-3 py-2" />
       </label>
       <label class="grid gap-1">
         <span class="text-sm font-semibold uppercase tracking-wide">Email</span>
-        <input type="email" name="email" required class="border border-navy/40 px-3 py-2" />
+        <input type="email" name="email" required class="rounded-lg border border-navy/40 px-3 py-2" />
       </label>
       <label class="grid gap-1">
         <span class="text-sm font-semibold uppercase tracking-wide">Message</span>
-        <textarea name="message" rows="5" required class="border border-navy/40 px-3 py-2"></textarea>
+        <textarea name="message" rows="5" required class="rounded-lg border border-navy/40 px-3 py-2"></textarea>
       </label>
-      <button type="submit" class="justify-self-start bg-navy px-6 py-3 font-semibold uppercase tracking-wide text-paper hover:bg-navy/80">
+      <button
+        type="submit"
+        class="justify-self-start rounded-full bg-navy px-6 py-3 font-semibold uppercase tracking-wide text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy/80 hover:shadow-card-hover"
+      >
         Send Message
       </button>
     </form>
 
-    <ul class="mt-10 flex gap-4 text-sm">
+    <ul class="mt-10 flex gap-1 text-sm">
       {settings.socials.map((social) => (
-        <li><a href={social.url} class="hover:text-navy">{social.platform}</a></li>
+        <li>
+          <a
+            href={social.url}
+            class="block rounded-full px-3 py-1.5 transition-colors duration-200 hover:bg-navy/10 hover:text-navy"
+          >
+            {social.platform}
+          </a>
+        </li>
       ))}
     </ul>
   </section>

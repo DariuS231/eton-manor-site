@@ -25,7 +25,10 @@ const formattedDate = formatDate(entry.data.date);
       <Content />
     </div>
     {entry.data.externalLink && (
-      <a href={entry.data.externalLink} class="mt-6 inline-block bg-navy px-6 py-3 font-semibold uppercase text-paper hover:bg-navy/80">
+      <a
+        href={entry.data.externalLink}
+        class="mt-6 inline-block rounded-full bg-navy px-6 py-3 font-semibold uppercase text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy/80 hover:shadow-card-hover"
+      >
         Event Details
       </a>
     )}
