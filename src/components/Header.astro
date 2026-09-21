@@ -24,7 +24,9 @@ const navLinks = settings.navLinks as NavLink[];
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
     <a href="/" class="font-heading text-xl sm:text-2xl font-semibold uppercase tracking-wide">
       {settings.logo ? (
-        <img src={settings.logo} alt={settings.siteTitle} class="h-8 sm:h-10 w-auto" />
+        <span class="inline-flex items-center rounded-lg bg-paper px-2.5 py-1.5">
+          <img src={settings.logo} alt={settings.siteTitle} class="h-7 w-auto sm:h-9" />
+        </span>
       ) : (
         <span>{settings.siteTitle}</span>
       )}
@@ -100,13 +102,13 @@ const navLinks = settings.navLinks as NavLink[];
                 ) : (
                   <ul
                     id={`desktop-dropdown-${i}`}
-                    class="dropdown-panel absolute left-0 top-full z-10 mt-1 hidden min-w-[10rem] rounded-xl bg-navy py-2 shadow-card-hover"
+                    class="dropdown-panel absolute right-0 top-full z-10 mt-1 hidden w-max min-w-[14rem] rounded-xl bg-navy py-2 shadow-card-hover"
                   >
                     {link.children.map((child) => (
                       <li>
                         <a
                           href={child.url}
-                          class="block px-4 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
+                          class="block whitespace-nowrap px-4 py-2 transition-colors duration-200 hover:bg-powder/20 hover:text-powder"
                         >
                           {child.label}
                         </a>
