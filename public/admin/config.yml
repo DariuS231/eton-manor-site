@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-github-username/eton-manor-site
+  repo: DariuS231/eton-manor-site
   branch: main
 
 media_folder: "public/uploads"
