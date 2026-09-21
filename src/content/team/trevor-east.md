@@ -1,6 +1,6 @@
 ---
 name: Trevor East
-role: Youth Section Coach
+role: Head of Youth
 photoFocalPoint: top
 photo: /uploads/team/Trevor-East.jpeg
 ---

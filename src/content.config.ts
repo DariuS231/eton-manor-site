@@ -1,13 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Sveltia's select widget writes '' (not null/undefined) for a blank optional field.
+const focalPointField = () =>
+  z.preprocess(
+    (val) => (val === '' ? undefined : val),
+    z.enum(['top', 'center', 'bottom']).nullish()
+  );
+
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/news' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    excerpt: z.string(),
+    excerpt: z.string().optional(),
     heroImage: z.string().optional(),
+    heroImageFocalPoint: focalPointField(),
     gallery: z.array(z.string()).optional(),
   }),
 });
@@ -20,7 +28,9 @@ const events = defineCollection({
     time: z.string().optional(),
     location: z.string(),
     eventType: z.enum(['Club Run', 'Race', 'Social']),
-    externalLink: z.string().url().optional(),
+    externalLink: z.union([z.string().url(), z.literal('')]).optional(),
+    heroImage: z.string().optional(),
+    heroImageFocalPoint: focalPointField(),
   }),
 });
 
@@ -30,7 +40,7 @@ const team = defineCollection({
     name: z.string(),
     role: z.string(),
     photo: z.string().optional(),
-    photoFocalPoint: z.enum(['top', 'center', 'bottom']).nullish(),
+    photoFocalPoint: focalPointField(),
     order: z.number().nullish(),
   }),
 });
@@ -48,8 +58,9 @@ const contentPages = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/content-pages' }),
   schema: z.object({
     title: z.string(),
-    excerpt: z.string(),
+    excerpt: z.string().optional(),
     heroImage: z.string().optional(),
+    heroImageFocalPoint: focalPointField(),
     gallery: z.array(z.string()).optional(),
   }),
 });

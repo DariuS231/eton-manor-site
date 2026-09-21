@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import home from '../data/home.json';
+import PostCard from '../components/PostCard.astro';
+import EventCard from '../components/EventCard.astro';
 
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -81,12 +83,25 @@ const heroKeyframesCss = heroImages
       <h2 class="mb-6 text-3xl uppercase tracking-wide">Latest News</h2>
       <ul class="grid gap-6 sm:grid-cols-3">
         {news.map((post) => (
-          <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
-            <a href={`/news/${post.id}`} class="font-heading text-xl">{post.data.title}</a>
-            <p class="mt-2 text-sm">{post.data.excerpt}</p>
+          <li>
+            <PostCard
+              title={post.data.title}
+              date={post.data.date}
+              heroImage={post.data.heroImage}
+              heroImageFocalPoint={post.data.heroImageFocalPoint}
+              href={`/news/${post.id}`}
+            />
           </li>
         ))}
       </ul>
+      <div class="mt-8 text-center">
+        <a
+          href="/news"
+          class="font-heading text-sm uppercase tracking-wide text-navy underline decoration-2 underline-offset-4 transition-colors duration-200 hover:text-navy/70"
+        >
+          See All News
+        </a>
+      </div>
     </div>
   </section>
 
@@ -94,11 +109,27 @@ const heroKeyframesCss = heroImages
     <h2 class="mb-6 text-3xl uppercase tracking-wide">Upcoming Events</h2>
     <ul class="grid gap-6 sm:grid-cols-3">
       {events.map((event) => (
-        <li class="rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover">
-          <a href={`/events/${event.id}`} class="font-heading text-xl">{event.data.title}</a>
-          <p class="mt-2 text-sm">{event.data.location}</p>
+        <li>
+          <EventCard
+            title={event.data.title}
+            date={event.data.date}
+            time={event.data.time}
+            location={event.data.location}
+            eventType={event.data.eventType}
+            heroImage={event.data.heroImage}
+            heroImageFocalPoint={event.data.heroImageFocalPoint}
+            href={`/events/${event.id}`}
+          />
         </li>
       ))}
     </ul>
+    <div class="mt-8 text-center">
+      <a
+        href="/events"
+        class="font-heading text-sm uppercase tracking-wide text-navy underline decoration-2 underline-offset-4 transition-colors duration-200 hover:text-navy/70"
+      >
+        See All Events
+      </a>
+    </div>
   </section>
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
 name: Christina Long
-role: Welfare Officer
+role: Safeguarding / Welfare
 photo: /uploads/team/Christina-Savva-Spitfire.jpeg
 photoFocalPoint: top
 order: null

@@ -14,11 +14,32 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const formattedDate = formatDate(entry.data.date);
+
+const focalPointClass = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}[entry.data.heroImageFocalPoint ?? 'center'];
 ---
 <BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
+  {entry.data.heroImage && (
+    <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
+      <img
+        src={entry.data.heroImage}
+        alt=""
+        class:list={['absolute inset-0 h-full w-full object-cover', focalPointClass]}
+      />
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="relative z-10 flex h-full items-center justify-center px-6 text-center">
+        <h1 class="text-4xl uppercase tracking-wide text-paper">{entry.data.title}</h1>
+      </div>
+    </div>
+  )}
   <article class="mx-auto max-w-3xl px-6 py-16">
     <span class="text-xs font-semibold uppercase tracking-wide text-navy">{entry.data.eventType}</span>
-    <h1 class="mb-2 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
+    {!entry.data.heroImage && (
+      <h1 class="mb-2 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
+    )}
     <p class="mb-1 text-sm">{formattedDate}{entry.data.time ? ` · ${entry.data.time}` : ''}</p>
     <p class="mb-6 text-sm">{entry.data.location}</p>
     <div class="prose">

@@ -12,11 +12,6 @@
           "children": []
         },
         {
-          "label": "Social",
-          "url": "/pages/social",
-          "children": []
-        },
-        {
           "label": "Senior Section",
           "url": "/pages/senior-section",
           "children": [
@@ -136,10 +131,6 @@
     {
       "platform": "Facebook",
       "url": "https://www.facebook.com/EtonManorAC"
-    },
-    {
-      "platform": "X",
-      "url": "https://x.com/etonmanorac"
     }
   ]
 }

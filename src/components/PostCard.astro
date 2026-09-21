@@ -4,18 +4,33 @@ import { formatDate } from '../lib/formatDate';
 interface Props {
   title: string;
   date: Date;
-  excerpt: string;
+  heroImage?: string;
+  heroImageFocalPoint?: 'top' | 'center' | 'bottom' | null;
   href: string;
 }
 
-const { title, date, excerpt, href } = Astro.props;
+const { title, date, heroImage, heroImageFocalPoint, href } = Astro.props;
 const formattedDate = formatDate(date);
+
+const focalPointClass = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}[heroImageFocalPoint ?? 'center'];
 ---
 <a
   href={href}
-  class="block rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+  class="block overflow-hidden rounded-xl bg-paper shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
 >
-  <p class="text-xs font-semibold uppercase tracking-wide text-navy">{formattedDate}</p>
-  <h3 class="font-heading text-xl">{title}</h3>
-  <p class="mt-1 text-sm">{excerpt}</p>
+  {heroImage && (
+    <img
+      src={heroImage}
+      alt=""
+      class:list={['aspect-[16/9] w-full object-cover', focalPointClass]}
+    />
+  )}
+  <div class="p-4">
+    <p class="text-xs font-semibold uppercase tracking-wide text-navy">{formattedDate}</p>
+    <h3 class="font-heading text-xl">{title}</h3>
+  </div>
 </a>

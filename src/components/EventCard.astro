@@ -7,18 +7,35 @@ interface Props {
   time?: string;
   location: string;
   eventType: string;
+  heroImage?: string;
+  heroImageFocalPoint?: 'top' | 'center' | 'bottom' | null;
   href: string;
 }
 
-const { title, date, time, location, eventType, href } = Astro.props;
+const { title, date, time, location, eventType, heroImage, heroImageFocalPoint, href } = Astro.props;
 const formattedDate = formatDate(date);
+
+const focalPointClass = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}[heroImageFocalPoint ?? 'center'];
 ---
 <a
   href={href}
-  class="block rounded-xl bg-paper p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+  class="block overflow-hidden rounded-xl bg-paper shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
 >
-  <span class="text-xs font-semibold uppercase tracking-wide text-navy">{eventType}</span>
-  <h3 class="font-heading text-xl">{title}</h3>
-  <p class="mt-1 text-sm">{formattedDate}{time ? ` · ${time}` : ''}</p>
-  <p class="text-sm">{location}</p>
+  {heroImage && (
+    <img
+      src={heroImage}
+      alt=""
+      class:list={['aspect-[16/9] w-full object-cover', focalPointClass]}
+    />
+  )}
+  <div class="p-4">
+    <span class="text-xs font-semibold uppercase tracking-wide text-navy">{eventType}</span>
+    <h3 class="font-heading text-xl">{title}</h3>
+    <p class="mt-1 text-sm">{formattedDate}{time ? ` · ${time}` : ''}</p>
+    <p class="text-sm">{location}</p>
+  </div>
 </a>

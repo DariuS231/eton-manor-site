@@ -15,7 +15,8 @@ const posts = (await getCollection('news')).sort(
         <PostCard
           title={post.data.title}
           date={post.data.date}
-          excerpt={post.data.excerpt}
+          heroImage={post.data.heroImage}
+          heroImageFocalPoint={post.data.heroImageFocalPoint}
           href={`/news/${post.id}`}
         />
       ))}

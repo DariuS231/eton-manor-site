@@ -1,6 +1,9 @@
 ---
 title: Youth Section
 excerpt: Youth Section
+heroImage: ''
+heroImageFocalPoint: ''
+gallery: []
 ---
 
 The youth section meets during term time from 6:30 till 7:30 on Monday nights at the Feel Good Centre, 170 Chingford Road E17 5AA.
@@ -11,4 +14,4 @@ All sessions are lead by a qualified EA Athletics coach along with assistants an
 
 As well as coached sessions on a Monday night there are opportunities to race within the Chingford league against other clubs in the area, or at local track meets
 
-For more information please contact [youth@eton-manor.com](mailto:youth@eton-manor.com)
+For more information please contact [emacyouth@gmail.com](mailto:emacyouth@gmail.com)

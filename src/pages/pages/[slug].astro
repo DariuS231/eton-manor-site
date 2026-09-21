@@ -13,6 +13,12 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const focalPointClass = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}[entry.data.heroImageFocalPoint ?? 'center'];
 ---
 <BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
   {entry.data.heroImage && (
@@ -20,7 +26,7 @@ const { Content } = await render(entry);
       <img
         src={entry.data.heroImage}
         alt=""
-        class="absolute inset-0 h-full w-full object-cover"
+        class:list={['absolute inset-0 h-full w-full object-cover', focalPointClass]}
       />
       <div class="absolute inset-0 bg-black/40"></div>
       <div class="relative z-10 flex h-full items-center justify-center px-6 text-center">

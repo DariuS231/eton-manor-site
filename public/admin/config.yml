@@ -17,8 +17,17 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Hero Image Focal Point"
+        name: "heroImageFocalPoint"
+        widget: "select"
+        required: false
+        hint: "If the hero image's crop is cutting off the important part, adjust this."
+        options:
+          - { label: "Top", value: "top" }
+          - { label: "Center", value: "center" }
+          - { label: "Bottom", value: "bottom" }
       - label: "Gallery"
         name: "gallery"
         widget: "list"
@@ -31,11 +40,23 @@ collections:
     folder: "src/content/events"
     create: true
     slug: "{{slug}}"
+    media_folder: "{{media_folder}}/events"
+    public_folder: "{{public_folder}}/events"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Time", name: "time", widget: "string", required: false }
       - { label: "Location", name: "location", widget: "string" }
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Hero Image Focal Point"
+        name: "heroImageFocalPoint"
+        widget: "select"
+        required: false
+        hint: "If the hero image's crop is cutting off the important part, adjust this."
+        options:
+          - { label: "Top", value: "top" }
+          - { label: "Center", value: "center" }
+          - { label: "Bottom", value: "bottom" }
       - label: "Event Type"
         name: "eventType"
         widget: "select"
@@ -84,8 +105,17 @@ collections:
     public_folder: "{{public_folder}}/content-pages"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
       - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Hero Image Focal Point"
+        name: "heroImageFocalPoint"
+        widget: "select"
+        required: false
+        hint: "If the hero image's crop is cutting off the important part, adjust this."
+        options:
+          - { label: "Top", value: "top" }
+          - { label: "Center", value: "center" }
+          - { label: "Bottom", value: "bottom" }
       - label: "Gallery"
         name: "gallery"
         widget: "list"

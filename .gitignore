@@ -5,3 +5,7 @@ dist/
 .env.*
 !.env.example
 netlify/functions/kit-catalog.json
+
+# Local Netlify folder
+.netlify
+deno.lock
