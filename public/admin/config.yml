@@ -67,6 +67,7 @@ collections:
         required: false
         pattern: ["^https?://", "Must start with http:// or https://"]
       - { label: "Description", name: "body", widget: "markdown", body: true }
+      - { label: "Spond ID", name: "spondId", widget: "hidden", required: false }
 
   - name: "team"
     label: "Team"

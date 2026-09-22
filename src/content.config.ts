@@ -31,6 +31,7 @@ const events = defineCollection({
     externalLink: z.union([z.string().url(), z.literal('')]).optional(),
     heroImage: z.string().optional(),
     heroImageFocalPoint: focalPointField(),
+    spondId: z.string().optional(),
   }),
 });
 
