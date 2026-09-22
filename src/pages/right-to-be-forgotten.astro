@@ -2,15 +2,19 @@
 import { marked } from 'marked';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import rightToBeForgotten from '../data/right-to-be-forgotten.json';
+import { netlifyImage } from '../lib/netlifyImage';
 
 const contentHtml = rightToBeForgotten.content ? await marked.parse(rightToBeForgotten.content) : '';
 ---
-<BaseLayout title={`${rightToBeForgotten.title} — Eton Manor Running Club`}>
+<BaseLayout title={`${rightToBeForgotten.title} — Eton Manor Running Club`} image={rightToBeForgotten.heroImage}>
   {rightToBeForgotten.heroImage && (
     <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
       <img
-        src={rightToBeForgotten.heroImage}
+        src={netlifyImage(rightToBeForgotten.heroImage, { width: 1600, height: 900 })}
         alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 bg-black/40"></div>

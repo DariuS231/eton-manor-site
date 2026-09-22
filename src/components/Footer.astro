@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import settings from '../data/settings.json';
+import { netlifyImage } from '../lib/netlifyImage';
 
 const sponsors = await getCollection('sponsors');
 
@@ -25,8 +26,10 @@ const socialEmoji: Record<string, string> = {
                 class="inline-block transition-transform duration-200 hover:-translate-y-0.5"
               >
                 <img
-                  src={sponsor.data.logo}
+                  src={netlifyImage(sponsor.data.logo, { width: 200, fit: 'contain' })}
                   alt={sponsor.data.name}
+                  loading="lazy"
+                  decoding="async"
                   class="h-16 w-auto object-contain"
                 />
               </a>

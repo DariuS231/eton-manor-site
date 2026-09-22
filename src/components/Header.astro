@@ -1,5 +1,6 @@
 ---
 import settings from '../data/settings.json';
+import { netlifyImage } from '../lib/netlifyImage';
 
 interface NavGrandchild {
   label: string;
@@ -25,7 +26,12 @@ const navLinks = settings.navLinks as NavLink[];
     <a href="/" class="font-heading text-xl sm:text-2xl font-semibold uppercase tracking-wide">
       {settings.logo ? (
         <span class="inline-flex items-center rounded-lg bg-paper px-2.5 py-1.5">
-          <img src={settings.logo} alt={settings.siteTitle} class="h-7 w-auto sm:h-9" />
+          <img
+            src={netlifyImage(settings.logo, { width: 200, fit: 'contain' })}
+            alt={settings.siteTitle}
+            decoding="async"
+            class="h-7 w-auto sm:h-9"
+          />
         </span>
       ) : (
         <span>{settings.siteTitle}</span>

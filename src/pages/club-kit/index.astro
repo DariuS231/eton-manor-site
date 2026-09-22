@@ -1,10 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { netlifyImage } from '../../lib/netlifyImage';
 
 const kit = await getCollection('kit');
 ---
-<BaseLayout title="Club Kit — Eton Manor Running Club">
+<BaseLayout
+  title="Club Kit — Eton Manor Running Club"
+  description="Shop official Eton Manor Running Club kit — vests, t-shirts, and more."
+>
   <section class="mx-auto max-w-5xl px-6 py-16">
     <h1 class="mb-8 text-4xl uppercase tracking-wide">Club Kit</h1>
     <p>Join in a proud history of East London running by wearing our distinctive club colours. Whether you are racing, training, or giving your support as a volunteer or spectator, we have a range of kit to help you represent the club.
@@ -15,8 +19,12 @@ const kit = await getCollection('kit');
         <div class="flex h-full flex-col rounded-xl bg-paper p-4 shadow-card">
           {item.data.image ? (
             <img
-              src={item.data.image}
+              src={netlifyImage(item.data.image, { width: 400, height: 400 })}
               alt={item.data.name}
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="400"
               class="mb-4 aspect-square w-full rounded-lg object-cover"
             />
           ) : (

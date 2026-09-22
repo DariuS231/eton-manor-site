@@ -12,7 +12,10 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 ---
-<BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
+<BaseLayout
+  title={`${entry.data.title} — Eton Manor Running Club`}
+  description={entry.data.description}
+>
   <article class="mx-auto max-w-3xl px-6 py-16">
     <h1 class="mb-6 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
     {entry.data.description && <p class="mb-8 whitespace-pre-line">{entry.data.description}</p>}

@@ -13,7 +13,10 @@ const past = allEvents
   .filter((e) => e.data.date < now)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<BaseLayout title="Events — Eton Manor Running Club">
+<BaseLayout
+  title="Events — Eton Manor Running Club"
+  description="Upcoming and past club runs, races, and social events at Eton Manor Running Club."
+>
   <section class="mx-auto max-w-5xl px-6 py-16">
     <h1 class="mb-8 text-4xl uppercase tracking-wide">Upcoming Events</h1>
     <div class="grid gap-6 sm:grid-cols-3">

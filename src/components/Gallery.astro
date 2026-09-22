@@ -1,9 +1,12 @@
 ---
+import { netlifyImage } from '../lib/netlifyImage';
+
 interface Props {
   images: string[];
 }
 
 const { images } = Astro.props;
+const lightboxImages = images.map((src) => netlifyImage(src, { width: 1600 }));
 ---
 {images.length > 0 && (
   <div data-gallery>
@@ -15,8 +18,12 @@ const { images } = Astro.props;
           data-index={i}
         >
           <img
-            src={src}
+            src={netlifyImage(src, { width: 300, height: 300 })}
             alt=""
+            loading="lazy"
+            decoding="async"
+            width="300"
+            height="300"
             class="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
           />
         </button>
@@ -62,7 +69,7 @@ const { images } = Astro.props;
   </div>
 )}
 
-<script define:vars={{ images }}>
+<script define:vars={{ images: lightboxImages }}>
   const galleryEl = document.querySelector('[data-gallery]');
 
   if (galleryEl) {

@@ -4,7 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const documents = await getCollection('documents');
 ---
-<BaseLayout title="Documents — Eton Manor Running Club">
+<BaseLayout
+  title="Documents — Eton Manor Running Club"
+  description="Club documents and downloads for Eton Manor Running Club members."
+>
   <section class="mx-auto max-w-3xl px-6 py-16">
     <h1 class="mb-8 text-4xl uppercase tracking-wide">Documents</h1>
     <ul class="flex flex-col gap-4">

@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FixtureCard from '../components/FixtureCard.astro';
 import raceFixturesPage from '../data/race-fixtures.json';
+import { netlifyImage } from '../lib/netlifyImage';
 
 const contentHtml = raceFixturesPage.content ? await marked.parse(raceFixturesPage.content) : '';
 
@@ -17,12 +18,18 @@ const past = allFixtures
   .filter((f) => f.data.date < now)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<BaseLayout title={`${raceFixturesPage.title} — Eton Manor Running Club`}>
+<BaseLayout
+  title={`${raceFixturesPage.title} — Eton Manor Running Club`}
+  image={raceFixturesPage.heroImage}
+>
   {raceFixturesPage.heroImage && (
     <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
       <img
-        src={raceFixturesPage.heroImage}
+        src={netlifyImage(raceFixturesPage.heroImage, { width: 1600, height: 900 })}
         alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 bg-black/40"></div>

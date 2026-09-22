@@ -3,17 +3,21 @@ import { marked } from 'marked';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import resultsPage from '../../data/results.json';
+import { netlifyImage } from '../../lib/netlifyImage';
 
 const contentHtml = resultsPage.content ? await marked.parse(resultsPage.content) : '';
 
 const results = await getCollection('results');
 ---
-<BaseLayout title={`${resultsPage.title} — Eton Manor Running Club`}>
+<BaseLayout title={`${resultsPage.title} — Eton Manor Running Club`} image={resultsPage.heroImage}>
   {resultsPage.heroImage && (
     <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
       <img
-        src={resultsPage.heroImage}
+        src={netlifyImage(resultsPage.heroImage, { width: 1600, height: 900 })}
         alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 bg-black/40"></div>

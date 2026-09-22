@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/formatDate';
+import { netlifyImage } from '../../lib/netlifyImage';
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
@@ -21,12 +22,19 @@ const focalPointClass = {
   bottom: 'object-bottom',
 }[entry.data.heroImageFocalPoint ?? 'center'];
 ---
-<BaseLayout title={`${entry.data.title} — Eton Manor Running Club`}>
+<BaseLayout
+  title={`${entry.data.title} — Eton Manor Running Club`}
+  description={`${entry.data.eventType} at ${entry.data.location} on ${formattedDate}.`}
+  image={entry.data.heroImage}
+>
   {entry.data.heroImage && (
     <div class="relative h-[50vh] min-h-[320px] w-full overflow-hidden">
       <img
-        src={entry.data.heroImage}
+        src={netlifyImage(entry.data.heroImage, { width: 1600, height: 900 })}
         alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
         class:list={['absolute inset-0 h-full w-full object-cover', focalPointClass]}
       />
       <div class="absolute inset-0 bg-black/40"></div>

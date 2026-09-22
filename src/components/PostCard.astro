@@ -1,5 +1,6 @@
 ---
 import { formatDate } from '../lib/formatDate';
+import { netlifyImage } from '../lib/netlifyImage';
 
 interface Props {
   title: string;
@@ -24,8 +25,12 @@ const focalPointClass = {
 >
   {heroImage && (
     <img
-      src={heroImage}
+      src={netlifyImage(heroImage, { width: 640, height: 360 })}
       alt=""
+      loading="lazy"
+      decoding="async"
+      width="640"
+      height="360"
       class:list={['aspect-[16/9] w-full object-cover', focalPointClass]}
     />
   )}

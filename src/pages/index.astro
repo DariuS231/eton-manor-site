@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import home from '../data/home.json';
 import PostCard from '../components/PostCard.astro';
 import EventCard from '../components/EventCard.astro';
+import { netlifyImage } from '../lib/netlifyImage';
 
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -41,14 +42,21 @@ const heroKeyframesCss = heroImages
   .map((_, i) => heroFadeKeyframes(i, heroImages.length))
   .join('\n');
 ---
-<BaseLayout title={`${home.heroHeading} — Eton Manor Running Club`}>
+<BaseLayout
+  title={`${home.heroHeading} — Eton Manor Running Club`}
+  description={home.heroSubheading}
+  image={heroImages[0]}
+>
   <section class="relative overflow-hidden bg-navy text-paper px-6 py-20 text-center">
     {heroImages.length > 0 && (
       <>
         {heroImages.map((src, i) => (
           <img
-            src={src}
+            src={netlifyImage(src, { width: 1920, height: 1080 })}
             alt=""
+            loading="eager"
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            decoding="async"
             class="absolute inset-0 h-full w-full object-cover"
             style={
               heroImages.length > 1
