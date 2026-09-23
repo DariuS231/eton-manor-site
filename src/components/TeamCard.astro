@@ -28,7 +28,7 @@ const focalPointClass = {
 >
   {photo ? (
     <img
-      src={netlifyImage(photo, { width: 256, height: 256 })}
+      src={netlifyImage(photo, { width: 256, height: 256, position: resolvedFocalPoint })}
       alt={name}
       loading="lazy"
       decoding="async"

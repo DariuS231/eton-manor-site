@@ -50,7 +50,7 @@ const focalPointClass = {
     )}
     <p class="mb-1 text-sm">{formattedDate}{entry.data.time ? ` · ${entry.data.time}` : ''}</p>
     <p class="mb-6 text-sm">{entry.data.location}</p>
-    <div class="prose">
+    <div class="prose text-justify">
       <Content />
     </div>
     {entry.data.externalLink && (
