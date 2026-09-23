@@ -7,6 +7,7 @@ import '@fontsource/work-sans/500.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { netlifyImage } from '../lib/netlifyImage';
 import settings from '../data/settings.json';
 
@@ -58,5 +59,8 @@ const ogImage = ogImageSource
       <slot />
     </main>
     <Footer />
+    {!import.meta.env.DEV && (
+      <CookieConsent measurementId={import.meta.env.PUBLIC_GA_MEASUREMENT_ID} />
+    )}
   </body>
 </html>

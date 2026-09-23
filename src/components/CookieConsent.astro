@@ -1,0 +1,72 @@
+---
+interface Props {
+  measurementId?: string;
+}
+
+const { measurementId } = Astro.props;
+---
+{measurementId && (
+  <div
+    id="cookie-consent-banner"
+    class="fixed inset-x-0 bottom-0 z-50 hidden flex-col items-center justify-between gap-3 bg-ink px-6 py-4 text-sm text-paper sm:flex-row"
+  >
+    <p>
+      We use cookies to understand how visitors use this site.
+      <a href="/privacy-policy" class="underline hover:text-powder">Learn more</a>
+    </p>
+    <div class="flex shrink-0 gap-2">
+      <button
+        type="button"
+        id="cookie-decline"
+        class="rounded-full px-4 py-1.5 font-semibold uppercase tracking-wide transition-colors duration-200 hover:bg-paper/10"
+      >
+        Decline
+      </button>
+      <button
+        type="button"
+        id="cookie-accept"
+        class="rounded-full bg-powder px-4 py-1.5 font-semibold uppercase tracking-wide text-ink transition-colors duration-200 hover:bg-white"
+      >
+        Accept
+      </button>
+    </div>
+  </div>
+  <script define:vars={{ measurementId }}>
+    const STORAGE_KEY = 'cookie-consent';
+
+    function loadAnalytics(id) {
+      const script = document.createElement('script');
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', id);
+    }
+
+    const banner = document.getElementById('cookie-consent-banner');
+    const consent = localStorage.getItem(STORAGE_KEY);
+
+    if (consent === 'accepted') {
+      loadAnalytics(measurementId);
+    } else if (consent === null) {
+      banner?.classList.remove('hidden');
+      banner?.classList.add('flex');
+    }
+
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, 'accepted');
+      banner?.classList.add('hidden');
+      loadAnalytics(measurementId);
+    });
+
+    document.getElementById('cookie-decline')?.addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, 'declined');
+      banner?.classList.add('hidden');
+    });
+  </script>
+)}

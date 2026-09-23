@@ -1,5 +1,10 @@
 import { readFileSync } from 'node:fs';
 import Stripe from 'stripe';
+import * as Sentry from '@sentry/node';
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 0 });
+}
 
 const catalog = JSON.parse(readFileSync(new URL('./kit-catalog.json', import.meta.url), 'utf-8'));
 
@@ -83,7 +88,13 @@ export default async (req) => {
         headers: jsonHeaders,
       });
     }
-    throw err;
+    console.error('Unexpected error building checkout params:', err);
+    Sentry.captureException(err);
+    await Sentry.flush(2000);
+    return new Response(JSON.stringify({ error: 'Unable to create checkout session.' }), {
+      status: 500,
+      headers: jsonHeaders,
+    });
   }
 
   try {
@@ -95,6 +106,8 @@ export default async (req) => {
     });
   } catch (err) {
     console.error('Stripe checkout session creation failed:', err);
+    Sentry.captureException(err);
+    await Sentry.flush(2000);
     return new Response(JSON.stringify({ error: 'Unable to create checkout session.' }), {
       status: 500,
       headers: jsonHeaders,
