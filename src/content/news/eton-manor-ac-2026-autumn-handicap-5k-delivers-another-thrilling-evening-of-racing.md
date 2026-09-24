@@ -3,7 +3,7 @@ title: Eton Manor AC 2026 Autumn Handicap 5K Delivers Another Thrilling Evening 
 date: 2026-09-22T14:21:00
 excerpt: A fantastic turnout gathered for the Eton Manor AC Autumn Handicap 5K on Tuesday 22 September 2026 at 7:00pm. With runners of all abilities starting according to their predicted times, the event once again produced a dramatic finish, with just minutes separating the field as athletes raced around the club's iconic 5K route.
 heroImage: /uploads/news/Designer (14).png
-heroImageFocalPoint: top
+heroImageFocalPoint: center
 gallery:
   - /uploads/news/0e3ce4dc8555611a8d9578a3ef02b95b.jpeg
 ---
