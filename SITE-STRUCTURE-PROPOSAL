@@ -1,0 +1,150 @@
+# Eton Manor AC — Proposed Site Structure & Navigation
+
+Based on a full review of the exported content (`content/`, 95 archived pages from the 111-URL
+sitemap). This proposes a new information architecture to replace the current one, which grew
+organically over ~10 years of ad-hoc page creation.
+
+## Key findings
+
+1. **78% of published pages are unreachable from the main navigation.** The live nav has only 4
+   top-level items with dropdowns (The Club, About Us, Membership, Event Reports) covering 21
+   pages. The other 74 — Training, Racing, Results, Grand Prix, Social, Shop, Teams, Contact, Club
+   Calendar, and more — exist only as direct URLs with no menu path to them.
+
+2. **The same seasonal content is republished under a new URL every season instead of one
+   structured archive.** Race results alone span 12 separate top-level pages with inconsistent,
+   non-chronological slugs: `results`, `results-2`, `results-3`, `results-4`,
+   `results-current-season`, `summer-season-2017/2018/2019`, `summer-season-2021-results`,
+   `winter-season-2017-18`, `winter-season-2019-20`, `2018-19-winter-results`. Because of this,
+   `results-current-season` is actually **two seasons out of date** — `results-4` (Winter 2023/24)
+   is the real current one. Grand Prix tables have the same problem across 12 pages
+   (`eton-manor-ac-grand-prix-tables` + 11 dated `grand-prix-YYYY-season` pages), though at least
+   those use a consistent, sortable slug — that pattern should be the template for Results too.
+
+3. **Two parallel news systems exist.** A real dated blog (`/YYYY/MM/DD/slug/`, e.g.
+   `2023/11/12/north-london-xc-hosted-by-eton-manor/`) sits alongside a static "Event Reports"
+   nav section (`news-2/` + 6 standalone pages) covering the same kind of content — and at least
+   one topic (Autumn Marathons 2021) appears to have been published in **both** systems under
+   near-identical slugs.
+
+4. **Dead and duplicate pages are still published:**
+   - `about-the-club/` — empty page, superseded by `about-us/` (which the nav actually uses).
+   - `join-the-club/` (top-level) — empty; the real membership application form lives at
+     `join/join-the-club/`.
+   - `contact-us/` vs `contact-us-2/` — two different contact implementations (an AJAX form vs. a
+     static list of mailto links). Only one should remain.
+   - `shop/` vs `shop-2/` — a dynamic (WooCommerce) shop and a static one. Same call.
+   - `teams/second-team/` and `teams/another-team/` — literal placeholder/test entries in the
+     internal fixtures database, still publicly live.
+
+5. **The `/join/` membership form leaks the full member roster** to anonymous visitors via a
+   hidden admin field (reported separately — see `README.md`). Any rebuilt Join flow must not
+   reintroduce this.
+
+6. **`/teams/*` isn't really public content.** It's the internal opponent/fixtures database
+   (GravityView), showing "no entries match your request" to anyone not logged in as a matching
+   member. It doesn't belong in public navigation at all.
+
+## Proposed navigation (top level)
+
+```
+About          Training        Racing          Social         News          Membership       Shop      Contact
+```
+
+8 top-level items, each a real landing page with working links to its children (the current
+`the-club/`, `racing/`, `social/` pages describe their sub-areas in prose but link to none of
+them — every proposed landing page should fix that).
+
+## Proposed sitemap
+
+```
+/                                          Home
+│
+├── /about/                                (merge the-club + about-us)
+│   ├── /about/who-we-are/
+│   ├── /about/our-history/
+│   ├── /about/committee/                  (was club-committee)
+│   ├── /about/constitution-and-policies/
+│   ├── /about/safeguarding/
+│   └── /about/meeting-minutes/
+│
+├── /training/                             (keep as-is — this hierarchy already works)
+│   ├── /training/schedule/                (was training-schedule)
+│   ├── /training/tuesdays/
+│   ├── /training/thursdays/
+│   ├── /training/pyramid-session/
+│   └── /training/thursday-night-5k-time-trial/
+│
+├── /racing/                               (landing page needs real links added)
+│   ├── /racing/fixtures/                  (was race-fixtures)
+│   ├── /racing/calendar/                  (was club-calendar)
+│   ├── /racing/results/                   NEW hub — current season + archive links
+│   │   ├── /racing/results/2023-24-winter/    (was results-4 — the actual current one)
+│   │   ├── /racing/results/2023-summer/       (was results-current-season)
+│   │   ├── /racing/results/2022-23-winter/    (was results-3)
+│   │   ├── /racing/results/2022-summer/       (was results-2)
+│   │   ├── /racing/results/2021-22-winter/    (was results)
+│   │   ├── /racing/results/2021-summer/       (was summer-season-2021-results)
+│   │   ├── /racing/results/2020-virtual/      (was 2020-virtual-racing — COVID season)
+│   │   ├── /racing/results/2019-20-winter/    (was winter-season-2019-20)
+│   │   ├── /racing/results/2019-summer/       (was summer-season-2019)
+│   │   ├── /racing/results/2018-19-winter/    (was 2018-19-winter-results)
+│   │   ├── /racing/results/2018-summer/       (was summer-season-2018)
+│   │   ├── /racing/results/2017-18-winter/    (was winter-season-2017-18)
+│   │   └── /racing/results/2017-summer/       (was summer-season-2017)
+│   ├── /racing/grand-prix/                NEW hub (was eton-manor-ac-grand-prix-tables)
+│   │   └── /racing/grand-prix/2022-winter/ … /2016-summer/   (11 seasons, slug already fine)
+│   ├── /racing/elvis-league/               (was elvis-league-winners)
+│   ├── /racing/parkrun-stats/
+│   └── /racing/other-races/                (was other-races-members-attend)
+│
+├── /social/                                (landing page needs real links added)
+│   └── /social/events/                     (was social-events)
+│       └── /social/events/club-quiz-night-6-may-2022/   (and future events, same pattern)
+│
+├── /news/                                  Single blog. Retire news-2 and its 6 static
+│   └── /news/2023/11/12/…/                 event pages — migrate any content not already
+│                                            covered by an existing dated post, then 301 the
+│                                            old URLs to their post equivalent.
+│
+├── /membership/                            (was types-of-membership)
+│   ├── /membership/join/                   (the real form, was join/join-the-club — PII
+│   │                                        leak fixed first, see finding #5)
+│   ├── /membership/club-kit/
+│   ├── /membership/spond/
+│   └── /membership/discounts/              (was member-discounts — add to nav, currently orphaned)
+│
+├── /shop/                                  Pick ONE implementation (see finding #4)
+│
+├── /contact/                               Pick ONE implementation (see finding #4)
+│
+└── (footer / account utility, not primary nav)
+    ├── /account/login/                     (was log-in)
+    ├── /account/my-membership/
+    ├── /account/member-zone/
+    ├── /privacy-policy/
+    └── /right-to-be-forgotten/
+```
+
+## Consolidation actions
+
+| Family | Current pages | Action |
+|---|---|---|
+| Results | 12 pages, inconsistent slugs | Restructure under `/racing/results/`, rename to `YYYY[-YY]-season` slugs, add a hub page showing the current season with an archive list |
+| Grand Prix | 12 pages (1 hub + 11 seasons) | Move under `/racing/grand-prix/`, keep the existing year-season slug pattern (it already works) |
+| Event Reports / News | `news-2/` + 6 pages, overlapping the dated blog | Migrate into `/news/` as dated posts; 301-redirect old URLs; verify the Autumn Marathons 2021 duplicate before merging |
+| `about-the-club` | empty page | Retire, 301 → `/about/` |
+| `join-the-club` (top-level) | empty page | Retire, 301 → `/membership/join/` |
+| `contact-us` / `contact-us-2` | two implementations | Keep one (recommend the static mailto version — no plugin dependency, can't silently break), retire the other with a redirect |
+| `shop` / `shop-2` | two implementations | Keep the transactional `/shop/`; fold any unique informational copy from `shop-2` into `/membership/club-kit/`, then retire it |
+| `teams/second-team`, `teams/another-team` | placeholder/test fixtures data | Delete outright — not real content, shouldn't be publicly live at all |
+| `teams/*` (the rest) | internal opponent/fixtures data, gated | Remove from public site structure entirely; it's admin/fixtures tooling, not visitor-facing content |
+
+## Notes carried over from the content review
+
+- The `/join/` (not `/join/join-the-club/`) membership form's admin dropdown leaks real member
+  names to anonymous visitors — must not be reintroduced in any rebuilt Join flow.
+- Two mailto links on `contact-us-2` were missing the `mailto:` prefix on the *live* site (broken
+  even today) — already corrected in the archive; carry the fix forward.
+- `club-calendar/` and the `teams/*` GravityView pages render nothing useful without a login/JS —
+  confirm what (if anything) a logged-out visitor is meant to see before rebuilding them.
