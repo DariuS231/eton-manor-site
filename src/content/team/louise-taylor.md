@@ -2,7 +2,7 @@
 name: Louise Taylor
 role: Treasurer
 photo: /uploads/team/unnamed.jpg
-photoFocalPoint: top
+photoFocalPoint: center
 order: null
 stravaUrl: https://www.strava.com/athletes/12908537
 instagramUrl: https://www.instagram.com/louise_active_challenge
