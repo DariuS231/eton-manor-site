@@ -8,6 +8,9 @@ const focalPointField = () =>
     z.enum(['top', 'center', 'bottom']).nullish()
   );
 
+// Sveltia's string widget also writes '' for a blank optional field, which z.string().url() rejects.
+const optionalUrlField = () => z.union([z.string().url(), z.literal('')]).optional();
+
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/news' }),
   schema: z.object({
@@ -28,7 +31,7 @@ const events = defineCollection({
     time: z.string().optional(),
     location: z.string(),
     eventType: z.enum(['Club Run', 'Race', 'Social']),
-    externalLink: z.union([z.string().url(), z.literal('')]).optional(),
+    externalLink: optionalUrlField(),
     heroImage: z.string().optional(),
     heroImageFocalPoint: focalPointField(),
   }),
@@ -42,6 +45,11 @@ const team = defineCollection({
     photo: z.string().optional(),
     photoFocalPoint: focalPointField(),
     order: z.number().nullish(),
+    stravaUrl: optionalUrlField(),
+    instagramUrl: optionalUrlField(),
+    facebookUrl: optionalUrlField(),
+    tiktokUrl: optionalUrlField(),
+    twitterUrl: optionalUrlField(),
   }),
 });
 

@@ -1,15 +1,32 @@
 ---
 import { netlifyImage } from '../lib/netlifyImage';
+import SocialIcon from './SocialIcon.astro';
 
 interface Props {
   name: string;
   role: string;
   photo?: string;
   photoFocalPoint?: 'top' | 'center' | 'bottom' | null;
+  stravaUrl?: string;
+  instagramUrl?: string;
+  facebookUrl?: string;
+  tiktokUrl?: string;
+  twitterUrl?: string;
 }
 
-const { name, role, photo, photoFocalPoint } = Astro.props;
+const { name, role, photo, photoFocalPoint, stravaUrl, instagramUrl, facebookUrl, tiktokUrl, twitterUrl } =
+  Astro.props;
 const resolvedFocalPoint = photoFocalPoint ?? 'center';
+
+const socials = (
+  [
+    ['strava', stravaUrl],
+    ['instagram', instagramUrl],
+    ['facebook', facebookUrl],
+    ['tiktok', tiktokUrl],
+    ['twitter', twitterUrl],
+  ] as const
+).filter(([, url]) => url);
 
 const words = name.trim().split(/\s+/);
 const initials =
@@ -45,7 +62,14 @@ const focalPointClass = {
   )}
   <h3 class="text-2xl uppercase tracking-wide">{name}</h3>
   <p class="mt-1 text-sm uppercase tracking-wide text-navy">{role}</p>
-  <div class="prose mt-3 text-left text-sm">
+  <div class="prose mt-3 text-center text-sm">
     <slot />
   </div>
+  {socials.length > 0 && (
+    <div class="mt-4 flex justify-center gap-1">
+      {socials.map(([platform, url]) => (
+        <SocialIcon platform={platform} url={url} />
+      ))}
+    </div>
+  )}
 </div>
