@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import EventTrainingSession from '../../components/EventTrainingSession.astro';
 import { formatDate } from '../../lib/formatDate';
 import { netlifyImage } from '../../lib/netlifyImage';
 
@@ -61,5 +62,6 @@ const focalPointClass = {
         Event Details
       </a>
     )}
+    <EventTrainingSession trainingSession={entry.data.trainingSession} />
   </article>
 </BaseLayout>

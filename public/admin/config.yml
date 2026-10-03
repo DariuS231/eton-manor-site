@@ -33,6 +33,15 @@ collections:
         widget: "list"
         required: false
         field: { label: "Photo", name: "photo", widget: "image" }
+      - label: "Author"
+        name: "author"
+        widget: "relation"
+        required: false
+        collection: "authors"
+        value_field: "{{slug}}"
+        search_fields: ["name"]
+        display_fields: ["name"]
+        hint: "Optional. Shown with their photo at the top of the page."
       - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "events"
@@ -66,6 +75,45 @@ collections:
         widget: "string"
         required: false
         pattern: ["^https?://", "Must start with http:// or https://"]
+      - label: "Training Session"
+        name: "trainingSession"
+        widget: "relation"
+        required: false
+        collection: "training-sessions"
+        value_field: "{{slug}}"
+        search_fields: ["title"]
+        display_fields: ["title"]
+        hint: "Optional. Shows the session's details and Strava map on the event page."
+      - { label: "Description", name: "body", widget: "markdown", body: true }
+
+  - name: "training-sessions"
+    label: "Training Sessions"
+    folder: "src/content/training-sessions"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "{{media_folder}}/training-sessions"
+    public_folder: "{{public_folder}}/training-sessions"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Session Type"
+        name: "sessionType"
+        widget: "select"
+        options: ["Intervals", "Tempo", "Hills", "Long Run", "Easy", "Track", "Race"]
+      - label: "Strava Link"
+        name: "stravaUrl"
+        widget: "string"
+        hint: "Paste a Strava route or activity link, e.g. https://www.strava.com/routes/123456. Segment links can't be shown as a map."
+        pattern: ['^https?://(www\.)?strava\.com/(routes|activities)/[0-9]+', "Must be a strava.com/routes/… or strava.com/activities/… link"]
+      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - label: "Hero Image Focal Point"
+        name: "heroImageFocalPoint"
+        widget: "select"
+        required: false
+        hint: "If the hero image's crop is cutting off the important part, adjust this."
+        options:
+          - { label: "Top", value: "top" }
+          - { label: "Center", value: "center" }
+          - { label: "Bottom", value: "bottom" }
       - { label: "Description", name: "body", widget: "markdown", body: true }
 
   - name: "team"
@@ -101,6 +149,27 @@ collections:
       - { label: "TikTok URL", name: "tiktokUrl", widget: "string", required: false, pattern: ["^$|^https?://", "Must start with http:// or https:// (or leave blank)"] }
       - { label: "Twitter / X URL", name: "twitterUrl", widget: "string", required: false, pattern: ["^$|^https?://", "Must start with http:// or https:// (or leave blank)"] }
 
+  - name: "authors"
+    label: "Authors"
+    folder: "src/content/authors"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "name"
+    media_folder: "{{media_folder}}/team"
+    public_folder: "{{public_folder}}/team"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - label: "Photo Focal Point"
+        name: "photoFocalPoint"
+        widget: "select"
+        required: false
+        hint: "If the photo's crop is cutting off their face, adjust this."
+        options:
+          - { label: "Top", value: "top" }
+          - { label: "Center", value: "center" }
+          - { label: "Bottom", value: "bottom" }
+
   - name: "content-pages"
     label: "Content Pages"
     folder: "src/content/content-pages"
@@ -126,6 +195,15 @@ collections:
         widget: "list"
         required: false
         field: { label: "Photo", name: "photo", widget: "image" }
+      - label: "Author"
+        name: "author"
+        widget: "relation"
+        required: false
+        collection: "authors"
+        value_field: "{{slug}}"
+        search_fields: ["name"]
+        display_fields: ["name"]
+        hint: "Optional. Shown with their photo at the top of the page."
       - { label: "Body", name: "body", widget: "markdown", body: true }
 
   - name: "sponsors"

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AuthorByline from '../../components/AuthorByline.astro';
 import Gallery from '../../components/Gallery.astro';
 import { formatDate } from '../../lib/formatDate';
 import { netlifyImage } from '../../lib/netlifyImage';
@@ -48,6 +49,7 @@ const focalPointClass = {
     {!entry.data.heroImage && (
       <h1 class="mb-6 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
     )}
+    <AuthorByline author={entry.data.author} />
     <p class="mb-6 text-sm">{formattedDate}</p>
     <div class="prose text-justify">
       <Content />

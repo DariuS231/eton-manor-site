@@ -1,0 +1,50 @@
+---
+import { getEntry, type CollectionEntry } from 'astro:content';
+import { netlifyImage } from '../lib/netlifyImage';
+
+interface Props {
+  author?: CollectionEntry<'news'>['data']['author'];
+}
+
+const { author: authorRef } = Astro.props;
+const author = authorRef ? await getEntry(authorRef) : undefined;
+
+let initials = '';
+let focalPointClass = 'object-center';
+if (author) {
+  const words = author.data.name.trim().split(/\s+/);
+  initials =
+    words.length > 1
+      ? `${words[0][0]}${words[words.length - 1][0]}`
+      : words[0].slice(0, 2);
+  focalPointClass = {
+    top: 'object-top',
+    center: 'object-center',
+    bottom: 'object-bottom',
+  }[author.data.photoFocalPoint ?? 'center'];
+}
+---
+{author && (
+  <div class="mb-6 flex items-center gap-3">
+    {author.data.photo ? (
+      <img
+        src={netlifyImage(author.data.photo, {
+          width: 96,
+          height: 96,
+          position: author.data.photoFocalPoint ?? 'center',
+        })}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        width="48"
+        height="48"
+        class:list={['h-12 w-12 rounded-full object-cover', focalPointClass]}
+      />
+    ) : (
+      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-powder">
+        <span class="font-heading text-lg uppercase text-ink">{initials}</span>
+      </div>
+    )}
+    <span class="text-sm uppercase tracking-wide text-navy">{author.data.name}</span>
+  </div>
+)}
