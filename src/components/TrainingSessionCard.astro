@@ -1,0 +1,39 @@
+---
+import { netlifyImage } from '../lib/netlifyImage';
+
+interface Props {
+  title: string;
+  sessionType: string;
+  heroImage?: string;
+  heroImageFocalPoint?: 'top' | 'center' | 'bottom' | null;
+  href: string;
+}
+
+const { title, sessionType, heroImage, heroImageFocalPoint, href } = Astro.props;
+
+const focalPointClass = {
+  top: 'object-top',
+  center: 'object-center',
+  bottom: 'object-bottom',
+}[heroImageFocalPoint ?? 'center'];
+---
+<a
+  href={href}
+  class="block overflow-hidden rounded-xl bg-paper shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
+>
+  {heroImage && (
+    <img
+      src={netlifyImage(heroImage, { width: 640, height: 360 })}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      width="640"
+      height="360"
+      class:list={['aspect-[16/9] w-full object-cover', focalPointClass]}
+    />
+  )}
+  <div class="p-4">
+    <span class="text-xs font-semibold uppercase tracking-wide text-navy">{sessionType}</span>
+    <h3 class="font-heading text-xl">{title}</h3>
+  </div>
+</a>

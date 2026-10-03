@@ -1,13 +1,12 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AuthorByline from '../../components/AuthorByline.astro';
-import Gallery from '../../components/Gallery.astro';
+import StravaEmbed from '../../components/StravaEmbed.astro';
 import { netlifyImage } from '../../lib/netlifyImage';
 
 export async function getStaticPaths() {
-  const pages = await getCollection('contentPages');
-  return pages.map((entry) => ({
+  const sessions = await getCollection('trainingSessions');
+  return sessions.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
   }));
@@ -24,7 +23,7 @@ const focalPointClass = {
 ---
 <BaseLayout
   title={`${entry.data.title} — Eton Manor Running Club`}
-  description={entry.data.excerpt}
+  description={`${entry.data.sessionType} training session: ${entry.data.title}.`}
   image={entry.data.heroImage}
 >
   {entry.data.heroImage && (
@@ -44,18 +43,13 @@ const focalPointClass = {
     </div>
   )}
   <article class="mx-auto max-w-3xl px-6 py-16">
+    <span class="text-xs font-semibold uppercase tracking-wide text-navy">{entry.data.sessionType}</span>
     {!entry.data.heroImage && (
       <h1 class="mb-6 text-4xl uppercase tracking-wide">{entry.data.title}</h1>
     )}
-    <AuthorByline author={entry.data.author} />
-    <div class="prose text-justify">
+    <div class="prose mb-8 mt-4 text-justify">
       <Content />
     </div>
-    {entry.data.gallery && entry.data.gallery.length > 0 && (
-      <div class="mt-8">
-        <h2 class="mb-4 text-2xl uppercase tracking-wide">Gallery</h2>
-        <Gallery images={entry.data.gallery} />
-      </div>
-    )}
+    <StravaEmbed url={entry.data.stravaUrl} />
   </article>
 </BaseLayout>

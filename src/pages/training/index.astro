@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TrainingSessionCard from '../../components/TrainingSessionCard.astro';
+
+const sessions = (await getCollection('trainingSessions')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+<BaseLayout
+  title="Training Sessions — Eton Manor Running Club"
+  description="Training sessions and routes run by Eton Manor Running Club."
+>
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="mb-8 text-4xl uppercase tracking-wide">Training Sessions</h1>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {sessions.map((session) => (
+        <TrainingSessionCard
+          title={session.data.title}
+          sessionType={session.data.sessionType}
+          heroImage={session.data.heroImage}
+          heroImageFocalPoint={session.data.heroImageFocalPoint}
+          href={`/training/${session.id}`}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

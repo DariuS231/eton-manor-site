@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { parseStravaUrl } from './lib/strava';
 
 // Sveltia's select widget writes '' (not null/undefined) for a blank optional field.
 const focalPointField = () =>
@@ -11,6 +12,10 @@ const focalPointField = () =>
 // Sveltia's string widget also writes '' for a blank optional field, which z.string().url() rejects.
 const optionalUrlField = () => z.union([z.string().url(), z.literal('')]).optional();
 
+// Sveltia's relation widget writes '' when nothing is selected.
+const optionalReference = (collection: 'authors' | 'trainingSessions') =>
+  z.preprocess((val) => (val === '' ? undefined : val), reference(collection).nullish());
+
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/news' }),
   schema: z.object({
@@ -20,6 +25,7 @@ const news = defineCollection({
     heroImage: z.string().optional(),
     heroImageFocalPoint: focalPointField(),
     gallery: z.array(z.string()).optional(),
+    author: optionalReference('authors'),
   }),
 });
 
@@ -32,6 +38,22 @@ const events = defineCollection({
     location: z.string(),
     eventType: z.enum(['Club Run', 'Race', 'Social']),
     externalLink: optionalUrlField(),
+    heroImage: z.string().optional(),
+    heroImageFocalPoint: focalPointField(),
+    trainingSession: optionalReference('trainingSessions'),
+  }),
+});
+
+const trainingSessions = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/training-sessions' }),
+  schema: z.object({
+    title: z.string(),
+    sessionType: z.enum(['Intervals', 'Tempo', 'Hills', 'Long Run', 'Easy', 'Track', 'Race']),
+    stravaUrl: z
+      .string()
+      .refine((url) => parseStravaUrl(url) !== null, {
+        message: 'Must be a Strava route or activity link (strava.com/routes/… or strava.com/activities/…)',
+      }),
     heroImage: z.string().optional(),
     heroImageFocalPoint: focalPointField(),
   }),
@@ -53,6 +75,15 @@ const team = defineCollection({
   }),
 });
 
+const authors = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: 'src/content/authors' }),
+  schema: z.object({
+    name: z.string(),
+    photo: z.string().optional(),
+    photoFocalPoint: focalPointField(),
+  }),
+});
+
 const sponsors = defineCollection({
   loader: glob({ pattern: '**/*.md', base: 'src/content/sponsors' }),
   schema: z.object({
@@ -70,6 +101,7 @@ const contentPages = defineCollection({
     heroImage: z.string().optional(),
     heroImageFocalPoint: focalPointField(),
     gallery: z.array(z.string()).optional(),
+    author: optionalReference('authors'),
   }),
 });
 
@@ -130,7 +162,9 @@ const kit = defineCollection({
 export const collections = {
   news,
   events,
+  trainingSessions,
   team,
+  authors,
   sponsors,
   contentPages,
   documents,

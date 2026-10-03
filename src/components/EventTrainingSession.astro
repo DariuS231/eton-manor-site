@@ -1,0 +1,24 @@
+---
+import { getEntry, render, type CollectionEntry } from 'astro:content';
+import StravaEmbed from './StravaEmbed.astro';
+
+interface Props {
+  trainingSession?: CollectionEntry<'events'>['data']['trainingSession'];
+}
+
+const { trainingSession: sessionRef } = Astro.props;
+const session = sessionRef ? await getEntry(sessionRef) : undefined;
+const Content = session ? (await render(session)).Content : undefined;
+---
+{session && Content && (
+  <section class="mt-12 border-t border-ink/10 pt-8">
+    <span class="text-xs font-semibold uppercase tracking-wide text-navy">{session.data.sessionType}</span>
+    <h2 class="mb-4 text-2xl uppercase tracking-wide">
+      <a href={`/training/${session.id}`} class="hover:underline">{session.data.title}</a>
+    </h2>
+    <div class="prose mb-8 text-justify">
+      <Content />
+    </div>
+    <StravaEmbed url={session.data.stravaUrl} />
+  </section>
+)}
