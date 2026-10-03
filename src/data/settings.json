@@ -7,22 +7,24 @@
       "url": "/pages/the-club",
       "children": [
         {
+          "label": "Who We Are",
+          "url": "/pages/who-we-are",
+          "children": []
+        },
+        {
           "label": "Youth Section",
           "url": "/pages/youth-section",
           "children": []
         },
         {
-          "label": "Senior Section",
-          "url": "/pages/senior-section",
+          "label": "Training",
+          "url": "/training",
+          "children": []
+        },
+        {
+          "label": "Racing",
+          "url": "/pages/racing",
           "children": [
-            {
-              "label": "Racing",
-              "url": "/pages/racing"
-            },
-            {
-              "label": "Training",
-              "url": "/pages/training"
-            },
             {
               "label": "Fixtures",
               "url": "/race-fixtures"
@@ -36,42 +38,6 @@
               "url": "/pages/parkrun-stats"
             }
           ]
-        }
-      ]
-    },
-    {
-      "label": "About Us",
-      "url": "/pages/about-us",
-      "children": [
-        {
-          "label": "Who We Are",
-          "url": "/pages/who-we-are",
-          "children": []
-        },
-        {
-          "label": "Club Committee",
-          "url": "/team",
-          "children": []
-        },
-        {
-          "label": "Our History",
-          "url": "/pages/our-history",
-          "children": []
-        },
-        {
-          "label": "Constitution and Policies",
-          "url": "/pages/constitution-and-policies",
-          "children": []
-        },
-        {
-          "label": "Safeguarding",
-          "url": "/pages/safeguarding",
-          "children": []
-        },
-        {
-          "label": "Meeting Minutes",
-          "url": "/meeting-minutes",
-          "children": []
         }
       ]
     },
@@ -92,30 +58,44 @@
       ]
     },
     {
-      "label": "Event Reports",
-      "url": "pages/event-reports",
+      "label": "News",
+      "url": "/news",
+      "children": []
+    },
+    {
+      "label": "About",
       "children": [
         {
-          "label": "2023 Spring Marathons",
-          "url": "/pages/2023-spring-marathons",
+          "label": "Club Committee",
+          "url": "/team",
           "children": []
         },
         {
-          "label": "2022 Spitfire Scramble",
-          "url": "/pages/2022-spitfire-scramble",
+          "label": "Constitution and Policies",
+          "url": "/pages/constitution-and-policies",
           "children": []
         },
         {
-          "label": "2021/2022 Chingford League",
-          "url": "/pages/2021-22-chingford-league",
+          "label": "Safeguarding",
+          "url": "/pages/safeguarding",
           "children": []
         },
         {
-          "label": "2021 Autumn Marathons",
-          "url": "/pages/2021-autumn-marathons",
+          "label": "Meeting Minutes",
+          "url": "/meeting-minutes",
+          "children": []
+        },
+        {
+          "label": "Documents",
+          "url": "/documents",
           "children": []
         }
       ]
+    },
+    {
+      "label": "Events",
+      "url": "/events",
+      "children": []
     }
   ],
   "footerText": "© 2026 Eton Manor Running Club. All rights reserved.",

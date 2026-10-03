@@ -350,6 +350,15 @@ collections:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
           - { label: "Content", name: "content", widget: "markdown", required: false }
+      - name: "training"
+        label: "Training Page"
+        file: "src/data/training.json"
+        media_folder: "{{media_folder}}/site"
+        public_folder: "{{public_folder}}/site"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+          - { label: "Content", name: "content", widget: "markdown", required: false }
       - name: "results"
         label: "Results Page"
         file: "src/data/results.json"

@@ -1,0 +1,9 @@
+# Retired/moved pages from the Sept 2026 site-structure cleanup
+/pages/about-us              /pages/who-we-are   301
+/pages/senior-section        /pages/the-club     301
+/pages/training              /training           301
+/pages/event-reports         /news               301
+/pages/2021-autumn-marathons /news/2021-autumn-marathons    301
+/pages/2022-spitfire-scramble /news/2022-spitfire-scramble  301
+/pages/2021-22-chingford-league /news/2021-22-chingford-league 301
+/pages/2023-spring-marathons /news/2023-spring-marathons    301

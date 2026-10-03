@@ -1,6 +1,7 @@
 ---
 title: 2021/22 Chingford League
-excerpt: 2021/22 Chingford League
+date: 2022-03-01
+excerpt: A great season of league racing concludes with the Wanstead Flats relays and prizegiving, with Eton Manor vets victorious in both team competitions.
 heroImage: /uploads/content-pages/Vet-Team-Women-2-1.jpeg
 gallery:
   - /uploads/content-pages/Vet-Team-Women.jpeg
@@ -19,6 +20,6 @@ The senior ladies team placed third behind winners Trent Park, and VPH in second
 
 And so, to the league prizegiving, and take a bow Eton Manor vets! Congratulations to Jenny Heymann, winner of the ladies V40 prize, with Sarah Flanagan runner-up. Congratulations also to Gaz Towers, winner of the mens V40 prize, with James Pilch runner-up. The ladies and mens vets were both victorious in the team competitions, winning some very impressive shields.
 
-Elsewhere, new Manorite Jack Henson won the senior men prize. We can’t claim an Eton Manor win because he was “cup-tied” (from changing clubs during the season), but nonetheless very well done Jack!. Kathy Webb was named “volunteer of the year” for helping out at every race of the season. Thanks also to Paul Manson, who was a regular timekeeper as well as producing the juniors results.
+Elsewhere, new Manorite Jack Henson won the senior men prize. We can't claim an Eton Manor win because he was "cup-tied" (from changing clubs during the season), but nonetheless very well done Jack!. Kathy Webb was named "volunteer of the year" for helping out at every race of the season. Thanks also to Paul Manson, who was a regular timekeeper as well as producing the juniors results.
 
-All told a great day out, and all the silverware is just reward for the hard work we’ve put in as a club. Thank you to everyone who ran, volunteered or supported the Chingford League in 2022. UTM!
+All told a great day out, and all the silverware is just reward for the hard work we've put in as a club. Thank you to everyone who ran, volunteered or supported the Chingford League in 2022. UTM!
